@@ -55,7 +55,6 @@ export default {
 
   // A path to a module which exports an async function that is triggered once before all test suites
   // globalSetup: undefined,
-
   // A path to a module which exports an async function that is triggered once after all test suites
   // globalTeardown: undefined,
 
@@ -128,7 +127,7 @@ export default {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ["<rootDir>/src/test/config/jest.ts"],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -137,7 +136,7 @@ export default {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  // testEnvironment: "jest-environment-node",
+  testEnvironment: "jsdom",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -146,7 +145,7 @@ export default {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: ["**/*.spec.ts"],
+  testMatch: ["**/*.spec.ts*"],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
@@ -182,4 +181,4 @@ export default {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-};
+}

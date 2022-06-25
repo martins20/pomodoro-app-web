@@ -25,6 +25,7 @@
     "react/react-in-jsx-scope": "off",
     "no-duplicate-imports": "error",
     "import/prefer-default-export": "off",
+    "react/function-component-definition": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
