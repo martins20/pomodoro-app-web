@@ -22,6 +22,12 @@ class SutSpy {
 
     sut = makeSUT({ rest_time_in_minutes: time_in_minutes, mode: "rest" })
   }
+
+  setFocusTimer(time_in_minutes: number): void {
+    cleanup()
+
+    sut = makeSUT({ focus_time_in_minutes: time_in_minutes, mode: "focus" })
+  }
 }
 
 let sutSpy: SutSpy
@@ -70,6 +76,16 @@ describe("Timer", () => {
 
   it("Should be able to set rest timer by props.", () => {
     sutSpy.setRestTimer(10)
+
+    const { getByText } = sut
+
+    const MinutesElement = getByText("10:00")
+
+    expect(MinutesElement).toBeTruthy()
+  })
+
+  it("Should be able to set focus timer by props.", () => {
+    sutSpy.setFocusTimer(10)
 
     const { getByText } = sut
 

@@ -5,9 +5,14 @@ export type TimerMode = "focus" | "rest"
 export type TimerProps = {
   mode?: TimerMode
   rest_time_in_minutes?: number
+  focus_time_in_minutes?: number
 }
 
-export const Timer: FC<TimerProps> = ({ mode = "focus", rest_time_in_minutes = 5 }) => {
+export const Timer: FC<TimerProps> = ({
+  mode = "focus",
+  rest_time_in_minutes = 5,
+  focus_time_in_minutes = 25,
+}) => {
   const isFocusMode = useMemo(() => mode === "focus", [mode])
 
   const formatTimeNumber = (time_in_minutes: number): string => {
@@ -19,7 +24,9 @@ export const Timer: FC<TimerProps> = ({ mode = "focus", rest_time_in_minutes = 5
   }
 
   const [label, setLabel] = useState(isFocusMode ? "time to focus" : "get some rest")
-  const [timer, setTimer] = useState(isFocusMode ? "25:00" : formatTimeNumber(rest_time_in_minutes))
+  const [timer, setTimer] = useState(
+    isFocusMode ? formatTimeNumber(focus_time_in_minutes) : formatTimeNumber(rest_time_in_minutes),
+  )
 
   return (
     <section>
