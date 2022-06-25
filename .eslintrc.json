@@ -26,6 +26,9 @@
     "no-duplicate-imports": "error",
     "import/prefer-default-export": "off",
     "react/function-component-definition": "off",
+    "react/require-default-props": "off",
+    "class-methods-use-this": "off",
+    "react/jsx-props-no-spreading": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

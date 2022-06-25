@@ -1,3 +1,13 @@
-import { FC } from "react";
+import { FC, useState } from "react"
 
-export const Timer: FC = () => <h1>time to focus</h1>
+export type TimerMode = "focus" | "rest"
+
+export type TimerProps = {
+  mode?: TimerMode
+}
+
+export const Timer: FC<TimerProps> = ({ mode = "focus" }) => {
+  const [label, setLabel] = useState(mode === "focus" ? "time to focus" : "get some rest")
+
+  return <h1>{label}</h1>
+}
