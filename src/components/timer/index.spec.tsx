@@ -43,4 +43,12 @@ describe("Timer", () => {
 
     expect(RestTextElement).toBeTruthy()
   })
+
+  it("Should be able to timer be 25 minutes by default in focus mode.", () => {
+    const { getByText } = sut
+
+    const MinutesElement = getByText("25:00")
+
+    expect(MinutesElement).toBeTruthy()
+  })
 })

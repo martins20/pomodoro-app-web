@@ -9,5 +9,10 @@ export type TimerProps = {
 export const Timer: FC<TimerProps> = ({ mode = "focus" }) => {
   const [label, setLabel] = useState(mode === "focus" ? "time to focus" : "get some rest")
 
-  return <h1>{label}</h1>
+  return (
+    <section>
+      <small>{label}</small>
+      <p>25:00</p>
+    </section>
+  )
 }
