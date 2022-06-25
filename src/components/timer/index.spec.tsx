@@ -51,4 +51,14 @@ describe("Timer", () => {
 
     expect(MinutesElement).toBeTruthy()
   })
+  
+  it("Should be able to timer be 5 minutes by default in rest mode.", () => {
+    sutSpy.setMode("rest")
+
+    const { getByText } = sut
+
+    const MinutesElement = getByText("05:00")
+
+    expect(MinutesElement).toBeTruthy()
+  })
 })
