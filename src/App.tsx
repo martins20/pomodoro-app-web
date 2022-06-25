@@ -4,7 +4,7 @@ import { GlobalStyle } from "./styles/styled-component/global-style"
 export function App() {
   return (
     <>
-      <Timer />
+      <Timer focus_time_in_minutes={30} mode="rest"/>
       <GlobalStyle />
     </>
   )

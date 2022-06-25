@@ -38,20 +38,20 @@ describe("Timer", () => {
     sutSpy = new SutSpy()
   })
 
-  it("Should be able to 'time to focus.' label if time is focus mode.", () => {
+  it("Should be able to 'Focus time.' label if time is focus mode.", () => {
     const { getByText } = sut
 
-    const FocusTextElement = getByText("time to focus")
+    const FocusTextElement = getByText("Focus time")
 
     expect(FocusTextElement).toBeTruthy()
   })
 
-  it("Should be able to 'get some rest' label if time is rest mode.", () => {
+  it("Should be able to 'Rest time' label if time is rest mode.", () => {
     sutSpy.setMode("rest")
 
     const { getByText } = sut
 
-    const RestTextElement = getByText("get some rest")
+    const RestTextElement = getByText("Rest time")
 
     expect(RestTextElement).toBeTruthy()
   })

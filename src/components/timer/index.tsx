@@ -1,5 +1,7 @@
 import { FC, useEffect, useMemo, useState } from "react"
 
+import { Container, Label, TimerText } from "./styles"
+
 export type TimerMode = "focus" | "rest"
 
 export type TimerProps = {
@@ -23,7 +25,7 @@ export const Timer: FC<TimerProps> = ({
 
   const [timerMode, setTimerMode] = useState<TimerMode>(mode)
   const isFocusMode = useMemo(() => timerMode === "focus", [timerMode])
-  const modeLabelText = useMemo(() => (isFocusMode ? "time to focus" : "get some rest"), [])
+  const modeLabelText = useMemo(() => (isFocusMode ? "Focus time" : "Rest time"), [])
 
   const [timer, setTimer] = useState(
     isFocusMode ? formatTimeNumber(focus_time_in_minutes) : formatTimeNumber(rest_time_in_minutes),
@@ -34,9 +36,9 @@ export const Timer: FC<TimerProps> = ({
   }, [mode])
 
   return (
-    <section>
-      <small>{modeLabelText}</small>
-      <p>{timer}</p>
-    </section>
+    <Container>
+      <Label isFocusMode={isFocusMode}>{modeLabelText}</Label>
+      <TimerText isFocusMode={isFocusMode}>{timer}</TimerText>
+    </Container>
   )
 }

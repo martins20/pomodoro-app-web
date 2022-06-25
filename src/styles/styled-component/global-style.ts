@@ -2,7 +2,10 @@ import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyle = createGlobalStyle`
     :root {
-        --color-background:  #1d1e26
+        --color-background:  #1d1e26;
+        --color-white: #eaebf0;
+        --color-purple: #b968f1;
+        --color-green: #83ea4c;
     }
     
     * {
@@ -12,7 +15,12 @@ export const GlobalStyle = createGlobalStyle`
 
         box-sizing: border-box;
 
-        color: white;
+        color: var(--color-white);
+        font-family: "Roboto", Helvetica, sans-serif;
+    }
+
+    button {
+        cursor: pointer;
     }
 
     #root, html, body {
