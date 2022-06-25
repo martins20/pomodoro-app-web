@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react"
+import { FC, useEffect, useMemo, useState } from "react"
 
 export type TimerMode = "focus" | "rest"
 
@@ -13,8 +13,6 @@ export const Timer: FC<TimerProps> = ({
   rest_time_in_minutes = 5,
   focus_time_in_minutes = 25,
 }) => {
-  const isFocusMode = useMemo(() => mode === "focus", [mode])
-
   const formatTimeNumber = (time_in_minutes: number): string => {
     const response = `${time_in_minutes.toLocaleString("pt-BR", {
       minimumIntegerDigits: 2,
@@ -23,14 +21,21 @@ export const Timer: FC<TimerProps> = ({
     return response
   }
 
-  const [label, setLabel] = useState(isFocusMode ? "time to focus" : "get some rest")
+  const [timerMode, setTimerMode] = useState<TimerMode>(mode)
+  const isFocusMode = useMemo(() => timerMode === "focus", [timerMode])
+  const modeLabelText = useMemo(() => (isFocusMode ? "time to focus" : "get some rest"), [])
+
   const [timer, setTimer] = useState(
     isFocusMode ? formatTimeNumber(focus_time_in_minutes) : formatTimeNumber(rest_time_in_minutes),
   )
 
+  useEffect(() => {
+    setTimerMode(mode)
+  }, [mode])
+
   return (
     <section>
-      <small>{label}</small>
+      <small>{modeLabelText}</small>
       <p>{timer}</p>
     </section>
   )
