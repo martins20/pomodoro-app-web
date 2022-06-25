@@ -1,6 +1,10 @@
 import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyle = createGlobalStyle`
+    :root {
+        --color-background:  #1d1e26
+    }
+    
     * {
         margin: 0;
         padding: 0;
@@ -19,6 +23,6 @@ export const GlobalStyle = createGlobalStyle`
         width: 100vw;
         height: 100vh;
 
-        background: #1d1e26;
+        background: var(--color-background);
     }
 `
