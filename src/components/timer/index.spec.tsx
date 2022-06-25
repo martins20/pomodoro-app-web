@@ -16,6 +16,12 @@ class SutSpy {
 
     sut = makeSUT({ mode })
   }
+
+  setRestTimer(time_in_minutes: number): void {
+    cleanup()
+
+    sut = makeSUT({ rest_time_in_minutes: time_in_minutes, mode: "rest" })
+  }
 }
 
 let sutSpy: SutSpy
@@ -51,13 +57,23 @@ describe("Timer", () => {
 
     expect(MinutesElement).toBeTruthy()
   })
-  
+
   it("Should be able to timer be 5 minutes by default in rest mode.", () => {
     sutSpy.setMode("rest")
 
     const { getByText } = sut
 
     const MinutesElement = getByText("05:00")
+
+    expect(MinutesElement).toBeTruthy()
+  })
+
+  it("Should be able to set rest timer by props.", () => {
+    sutSpy.setRestTimer(10)
+
+    const { getByText } = sut
+
+    const MinutesElement = getByText("10:00")
 
     expect(MinutesElement).toBeTruthy()
   })

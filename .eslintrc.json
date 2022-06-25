@@ -29,6 +29,7 @@
     "react/require-default-props": "off",
     "class-methods-use-this": "off",
     "react/jsx-props-no-spreading": "off",
+    "camelcase": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
