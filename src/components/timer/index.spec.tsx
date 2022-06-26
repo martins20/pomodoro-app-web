@@ -195,9 +195,23 @@ describe("Timer", () => {
   })
 
   it("Should pause count down when it is running", async () => {
+    sutSpy.setFocusTimer(0)
     sutSpy.pressStartButton()
 
     const { findByText } = sut
+
+    await waitFor(
+      async () => {
+        const StartButtonElement = await findByText("Start")
+
+        expect(StartButtonElement).toBeInTheDocument()
+      },
+      {
+        timeout: 3000,
+      },
+    )
+
+    sutSpy.pressStartButton()
 
     await waitFor(
       async () => {
