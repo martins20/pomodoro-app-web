@@ -30,6 +30,7 @@
     "class-methods-use-this": "off",
     "react/jsx-props-no-spreading": "off",
     "camelcase": "off",
+    "react/button-has-type": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

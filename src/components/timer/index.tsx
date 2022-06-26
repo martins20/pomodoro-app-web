@@ -2,6 +2,7 @@ import { FC, useEffect, useMemo, useState } from "react"
 
 import { Container, Label, TimerText } from "./styles"
 import { putTwoMinimumIntegerDigits } from "../../utils/put-two-minimum-integer-digits"
+import { Button } from "../button"
 
 export type TimerMode = "focus" | "rest"
 
@@ -103,9 +104,7 @@ export const Timer: FC<TimerProps> = ({
       <Label isFocusMode={isFocusMode}>{modeLabelText}</Label>
       <TimerText isFocusMode={isFocusMode}>{timer}</TimerText>
 
-      <button type="button" onClick={startCountDown}>
-        Start
-      </button>
+      <Button text="Start" onClick={startCountDown} />
     </Container>
   )
 }
