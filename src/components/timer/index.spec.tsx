@@ -52,6 +52,10 @@ describe("Timer", () => {
     sutSpy = new SutSpy()
   })
 
+  afterEach(() => {
+    cleanup()
+  })
+
   it("Should be able to 'Focus time.' label if time is focus mode.", () => {
     const { getByText } = sut
 
@@ -117,5 +121,19 @@ describe("Timer", () => {
     const CoundDownElement = await findByText("00:59")
 
     expect(CoundDownElement).toBeInTheDocument()
+  })
+
+  it("Should not be able to start timer count down more than one time", async () => {
+    sutSpy.setFocusTimer(1)
+    sutSpy.pressStartButton()
+    sutSpy.pressStartButton()
+
+    setTimeout(() => sutSpy.pressStartButton(), 100)
+
+    const { queryByText } = sut
+
+    const CoundDownElement = queryByText("00:58")
+
+    expect(CoundDownElement).not.toBeInTheDocument()
   })
 })
