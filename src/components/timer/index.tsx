@@ -32,6 +32,7 @@ export const Timer: FC<TimerProps> = ({
   const [countDownId, setCountDownId] = useState<NodeJS.Timeout | undefined>()
 
   const isFocusMode = useMemo(() => timerMode === "focus", [timerMode])
+  const butttonText = useMemo(() => (countDownId ? "Pause" : "Start"), [countDownId])
   const modeLabelText = useMemo(() => (isFocusMode ? "Focus time" : "Rest time"), [isFocusMode])
 
   const [restTimerInSeconds, setRestTimerInSeconds] = useState(
@@ -56,8 +57,6 @@ export const Timer: FC<TimerProps> = ({
   const startCountDown = (): void => {
     const oneSecond = 1 * 1000
 
-    clearCountDownProcess()
-
     const intervalId = setInterval(() => {
       if (isFocusMode) {
         setFocusTimerInSeconds((state) => state - 1)
@@ -69,18 +68,24 @@ export const Timer: FC<TimerProps> = ({
     setCountDownId(intervalId)
   }
 
+  const toggleCountDownProcess = () => {
+    if (!countDownId) {
+      startCountDown()
+    } else {
+      clearCountDownProcess()
+    }
+  }
+
   const toggleTimerMode = () => {
     clearCountDownProcess()
 
-    setTimeout(() => {
-      if (isFocusMode) {
-        setTimerMode("rest")
-        setFocusTimerInSeconds(getTimerInSeconds(focus_time_in_minutes))
-      } else {
-        setTimerMode("focus")
-        setRestTimerInSeconds(getTimerInSeconds(rest_time_in_minutes))
-      }
-    }, 1000)
+    if (isFocusMode) {
+      setTimerMode("rest")
+      setFocusTimerInSeconds(getTimerInSeconds(focus_time_in_minutes))
+    } else {
+      setTimerMode("focus")
+      setRestTimerInSeconds(getTimerInSeconds(rest_time_in_minutes))
+    }
   }
 
   useEffect(() => {
@@ -104,7 +109,7 @@ export const Timer: FC<TimerProps> = ({
       <Label isFocusMode={isFocusMode}>{modeLabelText}</Label>
       <TimerText isFocusMode={isFocusMode}>{timer}</TimerText>
 
-      <Button text="Start" onClick={startCountDown} />
+      <Button text={butttonText} onClick={toggleCountDownProcess} />
     </Container>
   )
 }
