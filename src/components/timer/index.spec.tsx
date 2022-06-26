@@ -1,4 +1,4 @@
-import { cleanup, render, RenderResult } from "@testing-library/react"
+import { cleanup, render, RenderResult, fireEvent } from "@testing-library/react"
 
 import { Timer as Sut, TimerMode, TimerProps } from "."
 
@@ -27,6 +27,20 @@ class SutSpy {
     cleanup()
 
     sut = makeSUT({ focus_time_in_minutes: time_in_minutes, mode: "focus" })
+  }
+
+  getStartButton(): HTMLElement {
+    const { getByText } = sut
+
+    const foundStartButtonElement = getByText("Start")
+
+    return foundStartButtonElement
+  }
+
+  pressStartButton(): void {
+    const StartButtonElement = this.getStartButton()
+
+    fireEvent.click(StartButtonElement)
   }
 }
 
@@ -92,5 +106,16 @@ describe("Timer", () => {
     const MinutesElement = getByText("10:00")
 
     expect(MinutesElement).toBeTruthy()
+  })
+
+  it("Should be able to start timer count down when user press into start button", async () => {
+    sutSpy.setFocusTimer(1)
+    sutSpy.pressStartButton()
+
+    const { findByText } = sut
+
+    const CoundDownElement = await findByText("00:59")
+
+    expect(CoundDownElement).toBeInTheDocument()
   })
 })
