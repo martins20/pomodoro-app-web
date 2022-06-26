@@ -136,4 +136,16 @@ describe("Timer", () => {
 
     expect(CoundDownElement).not.toBeInTheDocument()
   })
+
+  it("Should be able to toggle timer mode to rest when count down was equal to 0", async () => {
+    sutSpy.setFocusTimer(0)
+
+    sutSpy.pressStartButton()
+
+    const { findByText } = sut
+
+    const RestModeTextLabelElement = await findByText("Rest time")
+
+    expect(RestModeTextLabelElement).toBeInTheDocument()
+  })
 })

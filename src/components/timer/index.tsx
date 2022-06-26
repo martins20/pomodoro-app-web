@@ -29,10 +29,10 @@ export const Timer: FC<TimerProps> = ({
   const [countDownId, setCountDownId] = useState<NodeJS.Timeout | undefined>()
 
   const isFocusMode = useMemo(() => timerMode === "focus", [timerMode])
-  const modeLabelText = useMemo(() => (isFocusMode ? "Focus time" : "Rest time"), [])
+  const modeLabelText = useMemo(() => (isFocusMode ? "Focus time" : "Rest time"), [isFocusMode])
 
-  const [focusTimerInSeconds, setFocusTimerInSeconds] = useState(focus_time_in_minutes * 60)
   const [restTimerInSeconds, setRestTimerInSeconds] = useState(rest_time_in_minutes * 60)
+  const [focusTimerInSeconds, setFocusTimerInSeconds] = useState(focus_time_in_minutes * 60)
 
   const setCountDownTimer = () =>
     isFocusMode ? formatTimeNumber(focusTimerInSeconds) : formatTimeNumber(restTimerInSeconds)
@@ -49,10 +49,26 @@ export const Timer: FC<TimerProps> = ({
     clearCountDownProcess()
 
     const intervalId = setInterval(() => {
-      if (isFocusMode) setFocusTimerInSeconds((state) => state - 1)
+      if (isFocusMode) {
+        setFocusTimerInSeconds((state) => state - 1)
+      } else {
+        setRestTimerInSeconds((state) => state - 1)
+      }
     }, oneSecond)
 
     setCountDownId(intervalId)
+  }
+
+  const toggleTimerMode = () => {
+    setTimeout(() => {
+      if (isFocusMode) {
+        setTimerMode("rest")
+        setFocusTimerInSeconds(focus_time_in_minutes * 60)
+      } else {
+        setTimerMode("focus")
+        setRestTimerInSeconds(rest_time_in_minutes * 60)
+      }
+    }, 1000)
   }
 
   useEffect(() => {
@@ -61,8 +77,12 @@ export const Timer: FC<TimerProps> = ({
 
   // Setting CountDown Timer while focusTimerInSeconds update
   useEffect(() => {
+    const isSomeCoundDownReachToZero = !focusTimerInSeconds || !restTimerInSeconds
+
+    if (isSomeCoundDownReachToZero) toggleTimerMode()
+
     setTimer(setCountDownTimer())
-  }, [focusTimerInSeconds])
+  }, [focusTimerInSeconds, restTimerInSeconds])
 
   // Kill countDown process when component is unmounted.
   useEffect(() => clearCountDownProcess, [])
