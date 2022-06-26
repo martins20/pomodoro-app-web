@@ -1,5 +1,4 @@
-export const putTwoMinimumIntegerDigits = (value: number): string {
-    value.toLocaleString("pt-BR", {
-        minimumIntegerDigits: 2
-    })
-}
+export const putTwoMinimumIntegerDigits = (value: number): string =>
+  value.toLocaleString("pt-BR", {
+    minimumIntegerDigits: 2,
+  })
