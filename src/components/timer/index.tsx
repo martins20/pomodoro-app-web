@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from "react"
-import { putTwoMinimumIntegerDigits } from "../../utils/put-two-minimum-integer-digits"
 
 import { Container, Label, TimerText } from "./styles"
+import { putTwoMinimumIntegerDigits } from "../../utils/put-two-minimum-integer-digits"
 
 export type TimerMode = "focus" | "rest"
 
@@ -25,14 +25,20 @@ export const Timer: FC<TimerProps> = ({
     return response
   }
 
+  const getTimerInSeconds = (timer_in_minutes: number): number => timer_in_minutes * 60
+
   const [timerMode, setTimerMode] = useState<TimerMode>(mode)
   const [countDownId, setCountDownId] = useState<NodeJS.Timeout | undefined>()
 
   const isFocusMode = useMemo(() => timerMode === "focus", [timerMode])
   const modeLabelText = useMemo(() => (isFocusMode ? "Focus time" : "Rest time"), [isFocusMode])
 
-  const [restTimerInSeconds, setRestTimerInSeconds] = useState(rest_time_in_minutes * 60)
-  const [focusTimerInSeconds, setFocusTimerInSeconds] = useState(focus_time_in_minutes * 60)
+  const [restTimerInSeconds, setRestTimerInSeconds] = useState(
+    getTimerInSeconds(rest_time_in_minutes),
+  )
+  const [focusTimerInSeconds, setFocusTimerInSeconds] = useState(
+    getTimerInSeconds(focus_time_in_minutes),
+  )
 
   const setCountDownTimer = () =>
     isFocusMode ? formatTimeNumber(focusTimerInSeconds) : formatTimeNumber(restTimerInSeconds)
@@ -40,7 +46,10 @@ export const Timer: FC<TimerProps> = ({
   const [timer, setTimer] = useState(setCountDownTimer())
 
   const clearCountDownProcess = () => {
-    if (countDownId) clearInterval(countDownId)
+    if (countDownId) {
+      clearInterval(countDownId)
+      setCountDownId(undefined)
+    }
   }
 
   const startCountDown = (): void => {
@@ -60,13 +69,15 @@ export const Timer: FC<TimerProps> = ({
   }
 
   const toggleTimerMode = () => {
+    clearCountDownProcess()
+
     setTimeout(() => {
       if (isFocusMode) {
         setTimerMode("rest")
-        setFocusTimerInSeconds(focus_time_in_minutes * 60)
+        setFocusTimerInSeconds(getTimerInSeconds(focus_time_in_minutes))
       } else {
         setTimerMode("focus")
-        setRestTimerInSeconds(rest_time_in_minutes * 60)
+        setRestTimerInSeconds(getTimerInSeconds(rest_time_in_minutes))
       }
     }, 1000)
   }

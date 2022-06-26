@@ -1,4 +1,4 @@
-import { cleanup, render, RenderResult, fireEvent } from "@testing-library/react"
+import { cleanup, render, RenderResult, fireEvent, waitFor } from "@testing-library/react"
 
 import { Timer as Sut, TimerMode, TimerProps } from "."
 
@@ -118,9 +118,16 @@ describe("Timer", () => {
 
     const { findByText } = sut
 
-    const CoundDownElement = await findByText("00:59")
+    await waitFor(
+      async () => {
+        const CoundDownElement = await findByText("00:59")
 
-    expect(CoundDownElement).toBeInTheDocument()
+        expect(CoundDownElement).toBeInTheDocument()
+      },
+      {
+        timeout: 2000,
+      },
+    )
   })
 
   it("Should not be able to start timer count down more than one time", async () => {
@@ -139,13 +146,37 @@ describe("Timer", () => {
 
   it("Should be able to toggle timer mode to rest when count down was equal to 0", async () => {
     sutSpy.setFocusTimer(0)
-
     sutSpy.pressStartButton()
 
     const { findByText } = sut
 
-    const RestModeTextLabelElement = await findByText("Rest time")
+    await waitFor(
+      async () => {
+        const RestModeTextLabelElement = await findByText("Rest time")
 
-    expect(RestModeTextLabelElement).toBeInTheDocument()
+        expect(RestModeTextLabelElement).toBeInTheDocument()
+      },
+      {
+        timeout: 2000,
+      },
+    )
+  })
+
+  it("Should be able to toggle timer mode to focus when count down was equal to 0", async () => {
+    sutSpy.setRestTimer(0)
+    sutSpy.pressStartButton()
+
+    const { findByText } = sut
+
+    await waitFor(
+      async () => {
+        const RestModeTextLabelElement = await findByText("Focus time")
+
+        expect(RestModeTextLabelElement).toBeInTheDocument()
+      },
+      {
+        timeout: 2000,
+      },
+    )
   })
 })
