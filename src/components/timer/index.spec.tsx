@@ -144,20 +144,6 @@ describe("Timer", () => {
     )
   })
 
-  // it("Should not be able to start timer count down more than one time", async () => {
-  //   sutSpy.setFocusTimer(1)
-  //   sutSpy.pressStartButton()
-  //   sutSpy.pressStartButton()
-
-  //   setTimeout(() => sutSpy.pressStartButton(), 100)
-
-  //   const { queryByText } = sut
-
-  //   const CoundDownElement = queryByText("00:58")
-
-  //   expect(CoundDownElement).not.toBeInTheDocument()
-  // })
-
   it("Should be able to toggle timer mode to rest when count down was equal to 0", async () => {
     sutSpy.setFocusTimer(0)
     sutSpy.pressStartButton()
