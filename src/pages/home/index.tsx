@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useMemo, useCallback } from "react"
 
-import { Input } from "../../components"
+import { Button, Input } from "../../components"
 
 import { Container } from "./styles"
 
@@ -31,16 +31,18 @@ export const Home = () => {
 
   return (
     <Container data-testid="home">
-      <Input
-        value={todoText}
-        onChange={handleChangeTodoText}
-        onInputSubmit={handleAddTodo}
-        placeholder="Add a task here"
-        validation={{
-          message: "Todo name is required",
-          getInputValidation: getIsInputValid,
-        }}
-      />
+      <header>
+        <Input
+          value={todoText}
+          onChange={handleChangeTodoText}
+          onInputSubmit={handleAddTodo}
+          placeholder="Add a task here"
+          validation={{
+            message: "Todo name is required",
+            getInputValidation: getIsInputValid,
+          }}
+        />
+      </header>
 
       {Todos}
     </Container>

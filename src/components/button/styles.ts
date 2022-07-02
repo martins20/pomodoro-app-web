@@ -10,7 +10,7 @@ export const Container = styled.button`
 
   color: var(--color-purple);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 1rem;
 
   text-transform: uppercase;
 
