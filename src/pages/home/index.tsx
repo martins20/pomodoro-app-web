@@ -1,17 +1,23 @@
-import { ChangeEvent, useState, KeyboardEvent, useMemo } from "react"
-import { Container, Input } from "./styles"
+import { ChangeEvent, useState, useMemo, useCallback } from "react"
+
+import { Input } from "../../components"
+
+import { Container } from "./styles"
 
 export const Home = () => {
   const [todos, setTodos] = useState([""])
   const [todoText, setTodoText] = useState("")
 
-  const handleChangeTodoText = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeTodoText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setTodoText(event.target.value)
-  }
+  }, [])
 
-  const handleAddTodo = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key.toLocaleLowerCase() === "enter") setTodos((state) => [...state, todoText])
-  }
+  const getIsInputValid = useCallback((): boolean => !!todoText, [todoText])
+
+  const handleAddTodo = useCallback(() => {
+    setTodos((state) => [...state, todoText])
+    setTodoText("")
+  }, [todoText])
 
   const Todos = useMemo(
     () =>
@@ -26,10 +32,14 @@ export const Home = () => {
   return (
     <Container data-testid="home">
       <Input
-        placeholder="Add a task here"
         value={todoText}
         onChange={handleChangeTodoText}
-        onKeyUp={handleAddTodo}
+        onInputSubmit={handleAddTodo}
+        placeholder="Add a task here"
+        validation={{
+          message: "Todo name is required",
+          getInputValidation: getIsInputValid,
+        }}
       />
 
       {Todos}

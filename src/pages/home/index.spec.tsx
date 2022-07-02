@@ -50,4 +50,20 @@ describe("Home", () => {
 
     expect(todoElement).toBeInTheDocument()
   })
+
+  it("Should not be add a new todo with empty input value", () => {
+    const InputElement = sutSpy.getInput()
+
+    fireEvent.focus(InputElement)
+
+    fireEvent.change(InputElement, { target: { value: "" } })
+
+    fireEvent.blur(InputElement)
+
+    const { getByText } = sut
+
+    const ValidationErrorMessageElement = getByText("Todo name is required")
+
+    expect(ValidationErrorMessageElement).toBeInTheDocument()
+  })
 })
