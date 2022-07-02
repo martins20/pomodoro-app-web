@@ -29,6 +29,7 @@ export default {
   coveragePathIgnorePatterns: [
     "<rootDir>/src/App.tsx",
     "<rootDir>/src/main.tsx",
+    "<rootDir>/src/lib",
   ],
 
   // Indicates which provider should be used to instrument code for coverage
