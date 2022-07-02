@@ -14,14 +14,6 @@ type InputProps = {
 export const Input: FC<InputProps> = ({ onInputSubmit, validation, ...rest }) => {
   const [isInputValid, setIsInputvalid] = useState(true)
 
-  const handleValidadeInputOnBlur = (): boolean => {
-    const isValidationValid = validation.getInputValidation()
-
-    setIsInputvalid(isValidationValid)
-
-    return isValidationValid
-  }
-
   const handleInputSubmitByPressingEnterKey = (event: KeyboardEvent<HTMLInputElement>) => {
     const isEnterPressed = event.key.toLocaleLowerCase() === "enter"
 
@@ -50,7 +42,6 @@ export const Input: FC<InputProps> = ({ onInputSubmit, validation, ...rest }) =>
     <Container>
       <StyledInput
         {...rest}
-        onBlur={handleValidadeInputOnBlur}
         onKeyUp={handleInputSubmitByPressingEnterKey}
         isInvalid={!isInputValid}
         onChange={handleChange}

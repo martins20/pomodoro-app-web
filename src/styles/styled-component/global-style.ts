@@ -2,11 +2,14 @@ import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyle = createGlobalStyle`
     :root {
-        --color-background:  #1d1e26;
         --color-white: #eaebf0;
         --color-purple: #b968f1;
         --color-green: #83ea4c;
-        --color-red: #F25757
+        --color-red: #F25757;
+
+        --color-gray-500: #20212C;
+        --color-gray-800: #1d1e26;
+        --color-gray-900: #1a1b24;
     }
     
     * {
@@ -32,6 +35,6 @@ export const GlobalStyle = createGlobalStyle`
         width: 100vw;
         height: 100vh;
 
-        background: var(--color-background);
+        background: var(--color-gray-800);
     }
 `

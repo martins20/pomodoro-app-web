@@ -12,10 +12,10 @@ class SutSpy {
     return inputElement
   }
 
-  getTodoById(id: string): HTMLElement {
-    const { getByTestId } = sut
+  getTodoByName(name: string): HTMLElement {
+    const { getByText } = sut
 
-    const TodoElement = getByTestId(id)
+    const TodoElement = getByText(name)
 
     return TodoElement
   }
@@ -46,7 +46,7 @@ describe("Home", () => {
       key: "Enter",
     })
 
-    const todoElement = sutSpy.getTodoById("TODO 01")
+    const todoElement = sutSpy.getTodoByName("TODO 01")
 
     expect(todoElement).toBeInTheDocument()
   })
@@ -54,11 +54,11 @@ describe("Home", () => {
   it("Should not be add a new todo with empty input value", () => {
     const InputElement = sutSpy.getInput()
 
-    fireEvent.focus(InputElement)
-
     fireEvent.change(InputElement, { target: { value: "" } })
 
-    fireEvent.blur(InputElement)
+    fireEvent.keyUp(InputElement, {
+      key: "Enter",
+    })
 
     const { getByText } = sut
 

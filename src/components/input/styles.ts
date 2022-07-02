@@ -9,8 +9,6 @@ export const Container = styled.section`
   flex-direction: column;
 
   width: 100%;
-
- 
 `
 
 export const Input = styled.input<InputProps>`
@@ -21,7 +19,7 @@ export const Input = styled.input<InputProps>`
 
   padding: 0.8rem;
 
-  border: 2px solid #1a1b24;
+  border: 2px solid var(--color-gray-900);
 
   ${({ isInvalid }) =>
     isInvalid &&

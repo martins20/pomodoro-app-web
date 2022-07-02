@@ -1,11 +1,19 @@
 import { ChangeEvent, useState, useMemo, useCallback } from "react"
 
-import { Button, Input } from "../../components"
+import { Input, Todo } from "../../components"
+import { TodoDTO } from "../../dtos"
 
-import { Container } from "./styles"
+import { Container, TaskList } from "./styles"
 
 export const Home = () => {
-  const [todos, setTodos] = useState([""])
+  const [todos, setTodos] = useState<TodoDTO[]>([
+    {
+      id: Date.now().toString(),
+      name: "Finalizar o component de tarefa",
+      isCompleted: false,
+      createdAt: new Date(),
+    },
+  ])
   const [todoText, setTodoText] = useState("")
 
   const handleChangeTodoText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -15,16 +23,26 @@ export const Home = () => {
   const getIsInputValid = useCallback((): boolean => !!todoText, [todoText])
 
   const handleAddTodo = useCallback(() => {
-    setTodos((state) => [...state, todoText])
+    const newTodo = {
+      id: Date.now().toString(),
+      name: todoText,
+      isCompleted: false,
+      createdAt: new Date(),
+    }
+
+    setTodos((state) => [...state, newTodo])
     setTodoText("")
   }, [todoText])
 
   const Todos = useMemo(
     () =>
       todos.map((todo) => (
-        <h1 key={todo} data-testid={todo}>
-          {todo}
-        </h1>
+        <Todo
+          key={todo.id}
+          name={todo.name}
+          isCompleted={todo.isCompleted}
+          data-test-id={todo.name}
+        />
       )),
     [todos],
   )
@@ -44,7 +62,11 @@ export const Home = () => {
         />
       </header>
 
-      {Todos}
+      <TaskList>
+        <h3>Tasks - {todos.length}</h3>
+
+        {Todos}
+      </TaskList>
     </Container>
   )
 }
