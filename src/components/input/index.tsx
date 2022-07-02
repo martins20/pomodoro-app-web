@@ -39,14 +39,14 @@ export const Input: FC<InputProps> = ({ onInputSubmit, validation, ...rest }) =>
   }
 
   return (
-    <Container>
+    <Container isInvalid={!isInputValid}>
       <StyledInput
         {...rest}
         onKeyUp={handleInputSubmitByPressingEnterKey}
         isInvalid={!isInputValid}
         onChange={handleChange}
       />
-      {!isInputValid && <ValidationMessage>{validation.message}</ValidationMessage>}
+      <ValidationMessage>{validation.message}</ValidationMessage>
     </Container>
   )
 }

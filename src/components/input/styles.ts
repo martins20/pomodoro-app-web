@@ -1,17 +1,25 @@
 import styled, { css } from "styled-components"
 
-type InputProps = {
+type DefaultProps = {
   isInvalid: boolean
 }
 
-export const Container = styled.section`
+export const Container = styled.section<DefaultProps>`
   display: flex;
   flex-direction: column;
 
   width: 100%;
+
+  small {
+    ${({ isInvalid }) =>
+      isInvalid &&
+      css`
+        visibility: visible;
+      `};
+  }
 `
 
-export const Input = styled.input<InputProps>`
+export const Input = styled.input<DefaultProps>`
   border-radius: 5px;
   background: transparent;
 
@@ -29,11 +37,11 @@ export const Input = styled.input<InputProps>`
 `
 
 export const ValidationMessage = styled.small`
-  margin-top: 0.1rem;
   font-weight: bold;
   font-size: 0.875rem;
 
   color: var(--color-red);
   line-height: 1.6;
   letter-spacing: 0.05rem;
+  visibility: hidden;
 `

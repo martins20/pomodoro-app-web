@@ -1,19 +1,12 @@
 import { ChangeEvent, useState, useMemo, useCallback } from "react"
 
-import { Input, Todo } from "../../components"
+import { Input, Sidebar, Timer, Todo } from "../../components"
 import { TodoDTO } from "../../dtos"
 
 import { Container, TaskList } from "./styles"
 
 export const Home = () => {
-  const [todos, setTodos] = useState<TodoDTO[]>([
-    {
-      id: Date.now().toString(),
-      name: "Finalizar o component de tarefa",
-      isCompleted: false,
-      createdAt: new Date(),
-    },
-  ])
+  const [todos, setTodos] = useState<TodoDTO[]>([])
   const [todoText, setTodoText] = useState("")
 
   const handleChangeTodoText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -49,24 +42,30 @@ export const Home = () => {
 
   return (
     <Container data-testid="home">
-      <header>
-        <Input
-          value={todoText}
-          onChange={handleChangeTodoText}
-          onInputSubmit={handleAddTodo}
-          placeholder="Add a task here"
-          validation={{
-            message: "Todo name is required",
-            getInputValidation: getIsInputValid,
-          }}
-        />
-      </header>
+      <Sidebar />
 
-      <TaskList>
-        <h3>Tasks - {todos.length}</h3>
+      <Timer focus_time_in_minutes={.1}/>
 
-        {Todos}
-      </TaskList>
+      <section>
+        <header>
+          <Input
+            value={todoText}
+            onChange={handleChangeTodoText}
+            onInputSubmit={handleAddTodo}
+            placeholder="Add a task here"
+            validation={{
+              message: "Todo name is required",
+              getInputValidation: getIsInputValid,
+            }}
+          />
+        </header>
+
+        <TaskList>
+          <h3>Tasks - {todos.length}</h3>
+
+          {Todos}
+        </TaskList>
+      </section>
     </Container>
   )
 }
