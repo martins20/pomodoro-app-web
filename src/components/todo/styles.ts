@@ -1,14 +1,15 @@
 import styled, { css } from "styled-components"
 
+import { Icon } from "../icon"
+
 type ContainerProps = {
   isCompleted: boolean
 }
 
 export const Container = styled.div<ContainerProps>`
   display: flex;
-
-  gap: 0.5rem;
   align-items: center;
+  justify-content: space-between;
 
   background: var(--color-gray-500);
 
@@ -20,15 +21,34 @@ export const Container = styled.div<ContainerProps>`
     margin-top: 0.5rem;
   }
 
+  > div {
+    display: flex;
+
+    gap: 0.5rem;
+    align-items: center;
+  }
+
   ${({ isCompleted }) =>
     isCompleted &&
     css`
       opacity: 0.5;
 
-      > b {
+      > div > b {
         text-decoration: line-through;
       }
     `}
+
+  > button {
+    border: 0;
+    line-height: 0;
+    background: transparent;
+
+    :hover {
+      > svg path {
+        color: var(--color-red);
+      }
+    }
+  }
 `
 
 export const Checkbox = styled.input`
@@ -82,4 +102,11 @@ export const Checkbox = styled.input`
 `
 export const TodoName = styled.b`
   font-size: 1rem;
+`
+
+export const TrashIcon = styled(Icon).attrs({
+  type: "trash",
+  size: 18,
+})`
+  color: red;
 `

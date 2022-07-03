@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useMemo, useCallback, useLayoutEffect } from "re
 
 import { TodoDTO } from "../../dtos"
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
-import { Input, OnTodoCheck, Sidebar, Todo } from "../../components"
+import { Input, OnTodoCheck, OnTodoDelete, Sidebar, Todo } from "../../components"
 
 import { Container, TaskList } from "./styles"
 import { ReactIcons } from "../../services/icons/implementations/react-icon"
@@ -43,16 +43,25 @@ export const Home = () => {
     localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
   }
 
+  const handleDeleteTodo: OnTodoDelete = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id)
+
+    setTodos(updatedTodos)
+
+    localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
+  }
+
   const Todos = useMemo(
     () =>
       todos.map((todo) => (
         <Todo
-          key={todo.id}
           id={todo.id}
+          key={todo.id}
           name={todo.name}
+          data-test-id={todo.name}
+          onDelete={handleDeleteTodo}
           onCheck={handleCompleteTodo}
           isCompleted={todo.isCompleted}
-          data-test-id={todo.name}
         />
       )),
     [todos],

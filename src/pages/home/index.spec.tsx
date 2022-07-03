@@ -1,5 +1,12 @@
 /* eslint-disable no-proto */
-import { cleanup, fireEvent, render, RenderResult } from "@testing-library/react"
+import {
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react"
 import { Home as Sut } from "."
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
 import { TodoDTO } from "../../dtos"
@@ -106,6 +113,25 @@ describe("Home", () => {
     })
   })
 
+  it("Should delete a todo, by clicking into todo's delete button", async () => {
+    const { getByTestId, queryByText } = sut
+
+    const todoId = 112341234
+
+    dateSpy.mockImplementationOnce(() => todoId)
+
+    sutSpy.addTodo("Todo 01")
+    sutSpy.addTodo("Todo 02")
+
+    const deleteButtonElement = getByTestId(`delete_${todoId}`)
+
+    fireEvent.click(deleteButtonElement)
+
+    await waitFor(async () => {
+      expect(queryByText("Todo 01")).not.toBeInTheDocument()
+    })
+  })
+
   it("Should save on local storage the todos when user create one", () => {
     const todoData = {
       id: 112341234,
@@ -156,5 +182,24 @@ describe("Home", () => {
       LOCAL_STORAGE_TODO_KEY_NAME,
       expect.stringMatching(JSON.stringify({ ...todoData, isCompleted: true })),
     )
+  })
+
+  it("Should remove todo on localStorage when user delete one", () => {
+    const todoData: TodoDTO = {
+      id: "112341234",
+      name: "Todo 01",
+      isCompleted: false,
+      createdAt: new Date(),
+    }
+
+    sutSpy.mockGetItemResponse([todoData])
+
+    const { getByTestId } = sut
+
+    const deleteButtonElement = getByTestId(`delete_${todoData.id}`)
+
+    fireEvent.click(deleteButtonElement)
+
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_TODO_KEY_NAME, "[]")
   })
 })

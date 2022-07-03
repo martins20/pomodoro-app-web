@@ -8,6 +8,7 @@ const mockTodo: TodoProps = {
   name: "Test",
   isCompleted: false,
   onCheck: jest.fn(),
+  onDelete: jest.fn(),
 }
 
 describe("Todo", () => {
@@ -28,5 +29,15 @@ describe("Todo", () => {
     expect(TodoNameElement).toHaveStyle({
       textDecoration: "line-through",
     })
+  })
+
+  it("Should call onDelete when user clicks into trash icon", () => {
+    const { getByTestId } = sut
+
+    const deleteButtonElement = getByTestId(`delete_${mockTodo.id}`)
+
+    fireEvent.click(deleteButtonElement)
+
+    expect(mockTodo.onDelete).toHaveBeenCalledTimes(1)
   })
 })
