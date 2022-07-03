@@ -77,19 +77,17 @@ export const Home = () => {
 
   const CompletedTodos = useMemo(
     () =>
-      completedTodos
-        .reverse()
-        .map((todo) => (
-          <Todo
-            id={todo.id}
-            key={todo.id}
-            name={todo.name}
-            data-test-id={todo.name}
-            onDelete={handleDeleteTodo}
-            onCheck={handleCompleteTodo}
-            isCompleted={todo.isCompleted}
-          />
-        )),
+      completedTodos.map((todo) => (
+        <Todo
+          id={todo.id}
+          key={todo.id}
+          name={todo.name}
+          data-test-id={todo.name}
+          onDelete={handleDeleteTodo}
+          onCheck={handleCompleteTodo}
+          isCompleted={todo.isCompleted}
+        />
+      )),
     [completedTodos],
   )
 
