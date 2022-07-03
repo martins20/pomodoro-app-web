@@ -135,4 +135,26 @@ describe("Home", () => {
 
     expect(localStorageGetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_TODO_KEY_NAME)
   })
+
+  it("Should set completed todo on localStorage when user complete one", () => {
+    const todoData: TodoDTO = {
+      id: "112341234",
+      name: "Todo 01",
+      isCompleted: false,
+      createdAt: new Date(),
+    }
+
+    sutSpy.mockGetItemResponse([todoData])
+
+    const { getByTestId } = sut
+
+    const checkBoxTodoElement = getByTestId(`checkbox_${todoData.id}`)
+
+    fireEvent.click(checkBoxTodoElement)
+
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(
+      LOCAL_STORAGE_TODO_KEY_NAME,
+      expect.stringMatching(JSON.stringify({ ...todoData, isCompleted: true })),
+    )
+  })
 })

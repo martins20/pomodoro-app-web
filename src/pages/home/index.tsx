@@ -1,8 +1,8 @@
 import { ChangeEvent, useState, useMemo, useCallback, useLayoutEffect } from "react"
 
-import { Input, OnTodoCheck, Sidebar, Todo } from "../../components"
-import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
 import { TodoDTO } from "../../dtos"
+import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
+import { Input, OnTodoCheck, Sidebar, Todo } from "../../components"
 
 import { Container, TaskList } from "./styles"
 
@@ -33,9 +33,13 @@ export const Home = () => {
   }, [todoText])
 
   const handleCompleteTodo: OnTodoCheck = (id) => {
-    setTodos((state) =>
-      state.map((todo) => (todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo)),
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo,
     )
+
+    setTodos(updatedTodos)
+
+    localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
   }
 
   const Todos = useMemo(
