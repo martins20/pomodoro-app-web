@@ -12,8 +12,8 @@ export const Container = styled.section`
   justify-content: center;
 `
 
-export const Label = styled.small<DefaultProps>`
-  font-size: 1.5rem;
+export const Label = styled.h1<DefaultProps>`
+  font-size: 3rem;
   font-weight: 700;
 
   color: var(--color-purple);
@@ -25,7 +25,7 @@ export const Label = styled.small<DefaultProps>`
     `}
 `
 export const TimerText = styled.b<DefaultProps>`
-  font-size: 2rem;
+  font-size: 4rem;
 
   color: var(--color-purple);
 

@@ -1,11 +1,13 @@
 import { fireEvent, render, RenderResult } from "@testing-library/react"
-import { Todo, TaskProps } from "."
+import { Todo, TodoProps } from "."
 
 let sut: RenderResult
 
-const mockTodo: TaskProps = {
+const mockTodo: TodoProps = {
+  id: "TEST_ID",
   name: "Test",
   isCompleted: false,
+  onCheck: jest.fn(),
 }
 
 describe("Todo", () => {
@@ -22,6 +24,7 @@ describe("Todo", () => {
 
     const TodoNameElement = getByText(mockTodo.name)
 
+    expect(mockTodo.onCheck).toHaveBeenCalledWith(mockTodo.id)
     expect(TodoNameElement).toHaveStyle({
       textDecoration: "line-through",
     })

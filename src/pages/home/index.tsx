@@ -1,12 +1,37 @@
 import { ChangeEvent, useState, useMemo, useCallback } from "react"
 
-import { Input, Sidebar, Timer, Todo } from "../../components"
+import { Input, OnTodoCheck, Sidebar, Todo } from "../../components"
 import { TodoDTO } from "../../dtos"
 
 import { Container, TaskList } from "./styles"
 
 export const Home = () => {
-  const [todos, setTodos] = useState<TodoDTO[]>([])
+  const [todos, setTodos] = useState<TodoDTO[]>([
+    {
+      id: "1",
+      name: "Agrupar os Todo's Completos",
+      isCompleted: false,
+      createdAt: new Date(),
+    },
+    {
+      id: "2",
+      name: "Fazer o componente de Sidebar",
+      isCompleted: false,
+      createdAt: new Date(),
+    },
+    {
+      id: "3",
+      name: "Quando o usuario clicar em uma seçao, mudar os Todo's com base na selecao do usuario",
+      isCompleted: false,
+      createdAt: new Date(),
+    },
+    {
+      id: "4",
+      name: "Colocar a data de criaçao nos TODO's",
+      isCompleted: false,
+      createdAt: new Date(),
+    },
+  ])
   const [todoText, setTodoText] = useState("")
 
   const handleChangeTodoText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -27,12 +52,20 @@ export const Home = () => {
     setTodoText("")
   }, [todoText])
 
+  const handleCompleteTodo: OnTodoCheck = (id) => {
+    setTodos((state) =>
+      state.map((todo) => (todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo)),
+    )
+  }
+
   const Todos = useMemo(
     () =>
       todos.map((todo) => (
         <Todo
           key={todo.id}
+          id={todo.id}
           name={todo.name}
+          onCheck={handleCompleteTodo}
           isCompleted={todo.isCompleted}
           data-test-id={todo.name}
         />
@@ -43,8 +76,6 @@ export const Home = () => {
   return (
     <Container data-testid="home">
       <Sidebar />
-
-      <Timer focus_time_in_minutes={.1}/>
 
       <section>
         <header>

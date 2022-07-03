@@ -10,12 +10,12 @@ export const Container = styled.button`
 
   color: var(--color-purple);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 2rem;
 
   text-transform: uppercase;
 
-  border: 1px solid var(--color-purple);
-  border-radius: 5px;
+  border: 0.3rem solid var(--color-purple);
+  border-radius: 8px;
 
   transition: all 0.3s;
 
