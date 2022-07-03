@@ -1,10 +1,17 @@
 /* eslint-disable no-proto */
-import { fireEvent, render, RenderResult } from "@testing-library/react"
+import { cleanup, fireEvent, render, RenderResult } from "@testing-library/react"
 import { Home as Sut } from "."
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
 import { TodoDTO } from "../../dtos"
 
+const localStorageSetItemSpy = jest.spyOn(window.localStorage.__proto__, "setItem")
+const localStorageGetItemSpy = jest
+  .spyOn(window.localStorage.__proto__, "getItem")
+  .mockImplementation(() => null)
+
 let sut: RenderResult
+
+const makeSUT = (): RenderResult => render(<Sut />)
 
 class SutSpy {
   getInput(): HTMLElement {
@@ -32,20 +39,23 @@ class SutSpy {
       key: "Enter",
     })
   }
+
+  mockGetItemResponse(data: object[]) {
+    cleanup()
+
+    localStorageGetItemSpy.mockImplementationOnce(() => JSON.stringify(data))
+
+    sut = makeSUT()
+  }
 }
 
 let sutSpy: SutSpy
 
 const dateSpy = jest.spyOn(Date, "now")
 
-const localStorageSetItemSpy = jest.spyOn(window.localStorage.__proto__, "setItem")
-const localStorageGetItemSpy = jest
-  .spyOn(window.localStorage.__proto__, "getItem")
-  .mockImplementation(() => "[]")
-
 describe("Home", () => {
   beforeEach(() => {
-    sut = render(<Sut />)
+    sut = makeSUT()
     sutSpy = new SutSpy()
   })
 
@@ -121,7 +131,7 @@ describe("Home", () => {
       createdAt: new Date(),
     }
 
-    localStorageGetItemSpy.mockImplementationOnce(() => JSON.stringify([todoData]))
+    sutSpy.mockGetItemResponse([todoData])
 
     expect(localStorageGetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_TODO_KEY_NAME)
   })
