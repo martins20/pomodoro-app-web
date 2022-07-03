@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useMemo, useCallback } from "react"
+import { ChangeEvent, useState, useMemo, useCallback, useLayoutEffect } from "react"
 
 import { Input, OnTodoCheck, Sidebar, Todo } from "../../components"
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
@@ -7,32 +7,7 @@ import { TodoDTO } from "../../dtos"
 import { Container, TaskList } from "./styles"
 
 export const Home = () => {
-  const [todos, setTodos] = useState<TodoDTO[]>([
-    {
-      id: "1",
-      name: "Agrupar os Todo's Completos",
-      isCompleted: false,
-      createdAt: new Date(),
-    },
-    {
-      id: "2",
-      name: "Fazer o componente de Sidebar",
-      isCompleted: false,
-      createdAt: new Date(),
-    },
-    {
-      id: "3",
-      name: "Quando o usuario clicar em uma seçao, mudar os Todo's com base na selecao do usuario",
-      isCompleted: false,
-      createdAt: new Date(),
-    },
-    {
-      id: "4",
-      name: "Colocar a data de criaçao nos TODO's",
-      isCompleted: false,
-      createdAt: new Date(),
-    },
-  ])
+  const [todos, setTodos] = useState<TodoDTO[]>([])
   const [todoText, setTodoText] = useState("")
 
   const handleChangeTodoText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +52,16 @@ export const Home = () => {
       )),
     [todos],
   )
+
+  useLayoutEffect(() => {
+    const storagedTodos = localStorage.getItem(LOCAL_STORAGE_TODO_KEY_NAME)
+
+    if (!storagedTodos) return
+
+    const parsedStoragedTodos: TodoDTO[] = JSON.parse(storagedTodos)
+
+    setTodos(parsedStoragedTodos)
+  }, [])
 
   return (
     <Container data-testid="home">

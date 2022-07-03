@@ -1,6 +1,8 @@
+/* eslint-disable no-proto */
 import { fireEvent, render, RenderResult } from "@testing-library/react"
 import { Home as Sut } from "."
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
+import { TodoDTO } from "../../dtos"
 
 let sut: RenderResult
 
@@ -35,8 +37,11 @@ class SutSpy {
 let sutSpy: SutSpy
 
 const dateSpy = jest.spyOn(Date, "now")
-// eslint-disable-next-line no-proto
+
 const localStorageSetItemSpy = jest.spyOn(window.localStorage.__proto__, "setItem")
+const localStorageGetItemSpy = jest
+  .spyOn(window.localStorage.__proto__, "getItem")
+  .mockImplementation(() => "[]")
 
 describe("Home", () => {
   beforeEach(() => {
@@ -106,5 +111,18 @@ describe("Home", () => {
       LOCAL_STORAGE_TODO_KEY_NAME,
       expect.stringMatching(JSON.stringify([todoData])),
     )
+  })
+
+  it("Should get saved todos on localStorage when user open home page", () => {
+    const todoData: TodoDTO = {
+      id: "112341234",
+      name: "Todo 01",
+      isCompleted: false,
+      createdAt: new Date(),
+    }
+
+    localStorageGetItemSpy.mockImplementationOnce(() => JSON.stringify([todoData]))
+
+    expect(localStorageGetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_TODO_KEY_NAME)
   })
 })
