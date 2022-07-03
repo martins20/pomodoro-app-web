@@ -31,6 +31,8 @@
     "react/jsx-props-no-spreading": "off",
     "camelcase": "off",
     "react/button-has-type": "off",
+    "no-useless-constructor": "off",
+    "no-use-before-define": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

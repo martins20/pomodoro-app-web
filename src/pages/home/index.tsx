@@ -5,6 +5,7 @@ import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
 import { Input, OnTodoCheck, Sidebar, Todo } from "../../components"
 
 import { Container, TaskList } from "./styles"
+import { ReactIcons } from "../../services/icons/implementations/react-icon"
 
 export const Home = () => {
   const [todos, setTodos] = useState<TodoDTO[]>([])
@@ -70,6 +71,8 @@ export const Home = () => {
   return (
     <Container data-testid="home">
       <Sidebar />
+
+      {ReactIcons.getInstance().setIcon("trash")}
 
       <section>
         <header>
