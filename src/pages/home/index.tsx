@@ -32,23 +32,29 @@ export const Home = () => {
     localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
   }, [todoText])
 
-  const handleCompleteTodo: OnTodoCheck = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo,
-    )
+  const handleCompleteTodo: OnTodoCheck = useCallback(
+    (id: string) => {
+      const updatedTodos = todos.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo,
+      )
 
-    setTodos(updatedTodos)
+      setTodos(updatedTodos)
 
-    localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
-  }
+      localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
+    },
+    [todos],
+  )
 
-  const handleDeleteTodo: OnTodoDelete = (id) => {
-    const updatedTodos = todos.filter((todo) => todo.id !== id)
+  const handleDeleteTodo: OnTodoDelete = useCallback(
+    (id) => {
+      const updatedTodos = todos.filter((todo) => todo.id !== id)
 
-    setTodos(updatedTodos)
+      setTodos(updatedTodos)
 
-    localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
-  }
+      localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
+    },
+    [todos],
+  )
 
   const Todos = useMemo(
     () =>
