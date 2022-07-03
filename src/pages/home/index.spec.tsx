@@ -19,9 +19,21 @@ class SutSpy {
 
     return TodoElement
   }
+
+  addTodo(todoName: string): void {
+    const inputElement = this.getInput()
+
+    fireEvent.change(inputElement, { target: { value: todoName } })
+
+    fireEvent.keyUp(inputElement, {
+      key: "Enter",
+    })
+  }
 }
 
 let sutSpy: SutSpy
+
+const dateSpy = jest.spyOn(Date, "now")
 
 describe("Home", () => {
   beforeEach(() => {
@@ -38,13 +50,7 @@ describe("Home", () => {
   })
 
   it("Should add a todo a new todo", () => {
-    const InputElement = sutSpy.getInput()
-
-    fireEvent.change(InputElement, { target: { value: "TODO 01" } })
-
-    fireEvent.keyUp(InputElement, {
-      key: "Enter",
-    })
+    sutSpy.addTodo("TODO 01")
 
     const todoElement = sutSpy.getTodoByName("TODO 01")
 
@@ -52,18 +58,33 @@ describe("Home", () => {
   })
 
   it("Should not be add a new todo with empty input value", () => {
-    const InputElement = sutSpy.getInput()
-
-    fireEvent.change(InputElement, { target: { value: "" } })
-
-    fireEvent.keyUp(InputElement, {
-      key: "Enter",
-    })
+    sutSpy.addTodo("")
 
     const { getByText } = sut
 
     const ValidationErrorMessageElement = getByText("Todo name is required")
 
     expect(ValidationErrorMessageElement).toBeInTheDocument()
+  })
+
+  it("Should complete a todo, by clicking into todo's checkbox", () => {
+    const { getByTestId } = sut
+
+    const todoId = 112341234
+
+    dateSpy.mockImplementationOnce(() => todoId)
+
+    sutSpy.addTodo("Todo 01")
+    sutSpy.addTodo("Todo 02")
+
+    const checkBoxTodoElement = getByTestId(`checkbox_${todoId}`)
+
+    const todoElement = sutSpy.getTodoByName("Todo 01")
+
+    fireEvent.click(checkBoxTodoElement)
+
+    expect(todoElement).toHaveStyle({
+      textDecoration: "line-through",
+    })
   })
 })

@@ -23,7 +23,7 @@ export const Todo: FC<TodoProps> = ({ id, name, onCheck, isCompleted, ...rest })
     <Container isCompleted={isChecked} {...rest}>
       <Checkbox
         type="checkbox"
-        data-testid="checkbox"
+        data-testid={`checkbox_${id}`}
         checked={isChecked}
         onChange={handleCheckTodo}
       />

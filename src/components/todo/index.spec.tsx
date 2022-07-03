@@ -18,7 +18,7 @@ describe("Todo", () => {
   it("Should finish a todo by clicking into checkbox", () => {
     const { getByTestId, getByText } = sut
 
-    const checkboxElement = getByTestId("checkbox")
+    const checkboxElement = getByTestId(`checkbox_${mockTodo.id}`)
 
     fireEvent.click(checkboxElement)
 
