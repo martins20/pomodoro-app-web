@@ -1,6 +1,7 @@
 import { ChangeEvent, useState, useMemo, useCallback } from "react"
 
 import { Input, OnTodoCheck, Sidebar, Todo } from "../../components"
+import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
 import { TodoDTO } from "../../dtos"
 
 import { Container, TaskList } from "./styles"
@@ -48,8 +49,12 @@ export const Home = () => {
       createdAt: new Date(),
     }
 
-    setTodos((state) => [...state, newTodo])
+    const updatedTodos = [...todos, newTodo]
+
+    setTodos(updatedTodos)
     setTodoText("")
+
+    localStorage.setItem(LOCAL_STORAGE_TODO_KEY_NAME, JSON.stringify(updatedTodos))
   }, [todoText])
 
   const handleCompleteTodo: OnTodoCheck = (id) => {

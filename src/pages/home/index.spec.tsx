@@ -1,5 +1,6 @@
 import { fireEvent, render, RenderResult } from "@testing-library/react"
 import { Home as Sut } from "."
+import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
 
 let sut: RenderResult
 
@@ -34,6 +35,8 @@ class SutSpy {
 let sutSpy: SutSpy
 
 const dateSpy = jest.spyOn(Date, "now")
+// eslint-disable-next-line no-proto
+const localStorageSetItemSpy = jest.spyOn(window.localStorage.__proto__, "setItem")
 
 describe("Home", () => {
   beforeEach(() => {
@@ -86,5 +89,22 @@ describe("Home", () => {
     expect(todoElement).toHaveStyle({
       textDecoration: "line-through",
     })
+  })
+
+  it("Should save on local storage the todos when user create one", () => {
+    const todoData = {
+      id: 112341234,
+      name: "Todo 01",
+      isCompleted: false,
+    }
+
+    dateSpy.mockImplementationOnce(() => todoData.id)
+
+    sutSpy.addTodo("Todo 01")
+
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(
+      LOCAL_STORAGE_TODO_KEY_NAME,
+      expect.stringMatching(JSON.stringify([todoData])),
+    )
   })
 })

@@ -1,0 +1,1 @@
+export const LOCAL_STORAGE_TODO_KEY_NAME = "@TODOS"
