@@ -56,9 +56,12 @@ export const Home = () => {
     [todos],
   )
 
-  const Todos = useMemo(
+  const inCommingTodos = useMemo(() => todos.filter((todo) => !todo.isCompleted), [todos])
+  const completedTodos = useMemo(() => todos.filter((todo) => todo.isCompleted), [todos])
+
+  const IncommingTodos = useMemo(
     () =>
-      todos.map((todo) => (
+      inCommingTodos.map((todo) => (
         <Todo
           id={todo.id}
           key={todo.id}
@@ -69,7 +72,25 @@ export const Home = () => {
           isCompleted={todo.isCompleted}
         />
       )),
-    [todos],
+    [inCommingTodos],
+  )
+
+  const CompletedTodos = useMemo(
+    () =>
+      completedTodos
+        .reverse()
+        .map((todo) => (
+          <Todo
+            id={todo.id}
+            key={todo.id}
+            name={todo.name}
+            data-test-id={todo.name}
+            onDelete={handleDeleteTodo}
+            onCheck={handleCompleteTodo}
+            isCompleted={todo.isCompleted}
+          />
+        )),
+    [completedTodos],
   )
 
   useLayoutEffect(() => {
@@ -101,9 +122,19 @@ export const Home = () => {
         </header>
 
         <TaskList>
-          <h3>Tasks - {todos.length}</h3>
+          <div>
+            <h3>Tasks - {inCommingTodos.length}</h3>
 
-          {Todos}
+            {IncommingTodos}
+          </div>
+
+          {!!completedTodos.length && (
+            <div>
+              <h3>Completed - {completedTodos.length} </h3>
+
+              {CompletedTodos}
+            </div>
+          )}
         </TaskList>
       </section>
     </Container>

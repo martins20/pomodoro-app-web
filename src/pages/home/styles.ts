@@ -24,7 +24,13 @@ export const TaskList = styled.article`
 
   margin-top: 1rem;
 
-  > h3 {
-    margin-bottom: 1rem;
+  > div {
+    & + div {
+      margin-top: 1.5rem;
+    }
+
+    > h3 {
+      margin-bottom: 1rem;
+    }
   }
 `

@@ -1,12 +1,5 @@
 /* eslint-disable no-proto */
-import {
-  cleanup,
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@testing-library/react"
+import { cleanup, fireEvent, render, RenderResult, waitFor } from "@testing-library/react"
 import { Home as Sut } from "."
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
 import { TodoDTO } from "../../dtos"
@@ -104,9 +97,9 @@ describe("Home", () => {
 
     const checkBoxTodoElement = getByTestId(`checkbox_${todoId}`)
 
-    const todoElement = sutSpy.getTodoByName("Todo 01")
-
     fireEvent.click(checkBoxTodoElement)
+
+    const todoElement = sutSpy.getTodoByName("Todo 01")
 
     expect(todoElement).toHaveStyle({
       textDecoration: "line-through",
