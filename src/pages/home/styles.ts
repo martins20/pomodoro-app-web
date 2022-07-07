@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components"
+import { scrollbarCSS } from "../../styles"
 
 type TaskListProps = {
   hasCompletedTodo: boolean
@@ -43,25 +44,36 @@ export const TaskList = styled.article<TaskListProps>`
 
   margin-bottom: 1rem;
 
+  height: 100vh;
+
+  overflow: auto;
+
   > div {
+    padding-right: 0.5rem;
+
     > section {
       overflow-y: auto;
-      height: 90vh;
+      height: 80vh;
+
+      padding-right: 0.8rem;
     }
 
     & + div {
-      margin-top: 2rem;
+      margin: 1rem 0;
     }
 
     > h3 {
       margin-bottom: 1rem;
+      font-size: 1.2rem;
     }
 
     ${({ hasCompletedTodo }) =>
       hasCompletedTodo &&
       css`
         > section {
-          height: 40vh;
+          height: 35vh;
+
+          margin-bottom: 1rem;
         }
       `}
   }

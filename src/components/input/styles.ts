@@ -23,7 +23,7 @@ export const Input = styled.input<DefaultProps>`
   border-radius: 5px;
   background: transparent;
 
-  font-size: 1rem;
+  font-size: 1.2rem;
 
   padding: 0.8rem;
 

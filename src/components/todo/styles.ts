@@ -101,7 +101,9 @@ export const Checkbox = styled.input`
   }
 `
 export const TodoName = styled.b`
-  font-size: 1rem;
+  width: 100%;
+
+  font-size: 1.2rem;
 
   text-align: justify;
   line-height: 1.4;

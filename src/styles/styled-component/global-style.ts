@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components"
+import { scrollbarCSS } from "./scrollbar"
 
 export const GlobalStyle = createGlobalStyle`
     :root {
@@ -21,6 +22,8 @@ export const GlobalStyle = createGlobalStyle`
 
         color: var(--color-white);
         font-family: "Roboto", Helvetica, sans-serif;
+
+        ${scrollbarCSS}
     }
 
     button {
