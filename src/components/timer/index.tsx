@@ -32,7 +32,7 @@ export const Timer: FC<TimerProps> = ({
   const [countDownId, setCountDownId] = useState<NodeJS.Timeout | undefined>()
 
   const isFocusMode = useMemo(() => timerMode === "focus", [timerMode])
-  const butttonText = useMemo(() => (countDownId ? "Pause" : "Start"), [countDownId])
+  const buttonText = useMemo(() => (countDownId ? "Pause" : "Start"), [countDownId])
   const modeLabelText = useMemo(() => (isFocusMode ? "Focus time" : "Rest time"), [isFocusMode])
 
   const [restTimerInSeconds, setRestTimerInSeconds] = useState(
@@ -42,6 +42,7 @@ export const Timer: FC<TimerProps> = ({
     getTimerInSeconds(focus_time_in_minutes),
   )
 
+  // TODO: pass timeInSeconds into function param
   const setCountDownTimer = () =>
     isFocusMode ? formatTimeNumber(focusTimerInSeconds) : formatTimeNumber(restTimerInSeconds)
 
@@ -88,10 +89,6 @@ export const Timer: FC<TimerProps> = ({
     }
   }
 
-  useEffect(() => {
-    setTimerMode(mode)
-  }, [mode])
-
   // Setting CountDown Timer while focusTimerInSeconds update
   useEffect(() => {
     const isSomeCoundDownReachToZero = !focusTimerInSeconds || !restTimerInSeconds
@@ -109,7 +106,7 @@ export const Timer: FC<TimerProps> = ({
       <Label isFocusMode={isFocusMode}>{modeLabelText}</Label>
       <TimerText isFocusMode={isFocusMode}>{timer}</TimerText>
 
-      <Button text={butttonText} onClick={toggleCountDownProcess} />
+      <Button text={buttonText} onClick={toggleCountDownProcess} />
     </Container>
   )
 }
