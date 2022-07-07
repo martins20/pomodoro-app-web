@@ -11,21 +11,17 @@ export const Container = styled.div<ContainerProps>`
   align-items: center;
   justify-content: space-between;
 
+  gap: 1rem;
+  align-items: center;
+
   background: var(--color-gray-500);
 
   padding: 1rem;
 
   border-radius: 8px;
 
-  & + div {
-    margin-top: 0.5rem;
-  }
-
-  > div {
-    display: flex;
-
-    gap: 0.5rem;
-    align-items: center;
+  & + & {
+    margin-top: 0.8rem;
   }
 
   ${({ isCompleted }) =>
@@ -33,7 +29,7 @@ export const Container = styled.div<ContainerProps>`
     css`
       opacity: 0.5;
 
-      > div > b {
+      b {
         text-decoration: line-through;
       }
     `}
@@ -42,6 +38,7 @@ export const Container = styled.div<ContainerProps>`
     border: 0;
     line-height: 0;
     background: transparent;
+    margin: 0;
 
     :hover {
       > svg path {
@@ -61,8 +58,11 @@ export const Checkbox = styled.input`
   color: currentColor;
   width: 1rem;
   height: 1rem;
+
+  min-width: 1rem;
+  min-height: 1rem;
   border: 0.1rem solid currentColor;
-  border-radius: 0.4rem;
+  border-radius: 100%;
   transform: translateY(-0.075rem);
 
   display: grid;
@@ -102,6 +102,9 @@ export const Checkbox = styled.input`
 `
 export const TodoName = styled.b`
   font-size: 1rem;
+
+  text-align: justify;
+  line-height: 1.4;
 `
 
 export const TrashIcon = styled(Icon).attrs({

@@ -27,15 +27,14 @@ export const Todo: FC<TodoProps> = ({ id, name, onCheck, onDelete, isCompleted, 
 
   return (
     <Container isCompleted={isChecked} {...rest}>
-      <div>
-        <Checkbox
-          type="checkbox"
-          data-testid={`checkbox_${id}`}
-          checked={isChecked}
-          onChange={handleCheckTodo}
-        />
-        <TodoName>{name}</TodoName>
-      </div>
+      <Checkbox
+        type="checkbox"
+        data-testid={`checkbox_${id}`}
+        checked={isChecked}
+        onChange={handleCheckTodo}
+      />
+
+      <TodoName>{name}</TodoName>
 
       <button onClick={handleDeleteTodo} data-testid={`delete_${id}`}>
         <TrashIcon />

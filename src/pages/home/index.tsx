@@ -2,9 +2,9 @@ import { ChangeEvent, useState, useMemo, useCallback, useLayoutEffect } from "re
 
 import { TodoDTO } from "../../dtos"
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
-import { Input, OnTodoCheck, OnTodoDelete, Sidebar, Timer, Todo } from "../../components"
+import { Input, OnTodoCheck, OnTodoDelete, Timer, Todo } from "../../components"
 
-import { Container, TaskList } from "./styles"
+import { Container, Content, TaskList } from "./styles"
 
 export const Home = () => {
   const [todos, setTodos] = useState<TodoDTO[]>([])
@@ -60,34 +60,40 @@ export const Home = () => {
   const completedTodos = useMemo(() => todos.filter((todo) => todo.isCompleted), [todos])
 
   const IncommingTodos = useMemo(
-    () =>
-      inCommingTodos.map((todo) => (
-        <Todo
-          id={todo.id}
-          key={todo.id}
-          name={todo.name}
-          data-test-id={todo.name}
-          onDelete={handleDeleteTodo}
-          onCheck={handleCompleteTodo}
-          isCompleted={todo.isCompleted}
-        />
-      )),
+    () => (
+      <section>
+        {inCommingTodos.map((todo) => (
+          <Todo
+            id={todo.id}
+            key={todo.id}
+            name={todo.name}
+            data-test-id={todo.name}
+            onDelete={handleDeleteTodo}
+            onCheck={handleCompleteTodo}
+            isCompleted={todo.isCompleted}
+          />
+        ))}
+      </section>
+    ),
     [inCommingTodos],
   )
 
   const CompletedTodos = useMemo(
-    () =>
-      completedTodos.map((todo) => (
-        <Todo
-          id={todo.id}
-          key={todo.id}
-          name={todo.name}
-          data-test-id={todo.name}
-          onDelete={handleDeleteTodo}
-          onCheck={handleCompleteTodo}
-          isCompleted={todo.isCompleted}
-        />
-      )),
+    () => (
+      <section>
+        {completedTodos.map((todo) => (
+          <Todo
+            id={todo.id}
+            key={todo.id}
+            name={todo.name}
+            data-test-id={todo.name}
+            onDelete={handleDeleteTodo}
+            onCheck={handleCompleteTodo}
+            isCompleted={todo.isCompleted}
+          />
+        ))}
+      </section>
+    ),
     [completedTodos],
   )
 
@@ -103,11 +109,9 @@ export const Home = () => {
 
   return (
     <Container data-testid="home">
-      <Sidebar />
-
       <Timer />
 
-      <section>
+      <Content>
         <header>
           <Input
             value={todoText}
@@ -121,7 +125,7 @@ export const Home = () => {
           />
         </header>
 
-        <TaskList>
+        <TaskList hasCompletedTodo={!!completedTodos.length}>
           <div>
             <h3>Tasks - {inCommingTodos.length}</h3>
 
@@ -136,7 +140,7 @@ export const Home = () => {
             </div>
           )}
         </TaskList>
-      </section>
+      </Content>
     </Container>
   )
 }
