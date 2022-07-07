@@ -53,7 +53,7 @@ export const TaskList = styled.article<TaskListProps>`
 
     > section {
       overflow-y: auto;
-      height: 80vh;
+      max-height: 80vh;
 
       padding-right: 0.8rem;
     }
@@ -71,7 +71,7 @@ export const TaskList = styled.article<TaskListProps>`
       hasCompletedTodo &&
       css`
         > section {
-          height: 35vh;
+          max-height: 35vh;
 
           margin-bottom: 1rem;
         }
