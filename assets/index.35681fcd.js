@@ -295,7 +295,7 @@ Error generating stack: `+o.message+`
 
     > section {
       overflow-y: auto;
-      height: 80vh;
+      max-height: 80vh;
 
       padding-right: 0.8rem;
     }
@@ -311,7 +311,7 @@ Error generating stack: `+o.message+`
 
     ${({hasCompletedTodo:e})=>e&&zt`
         > section {
-          height: 35vh;
+          max-height: 35vh;
 
           margin-bottom: 1rem;
         }
