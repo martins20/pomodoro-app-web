@@ -77,4 +77,14 @@ export const TaskList = styled.article<TaskListProps>`
         }
       `}
   }
+
+  > div + div {
+    ${({ hasCompletedTodo }) =>
+      hasCompletedTodo &&
+      css`
+        > section {
+          max-height: none;
+        }
+      `}
+  }
 `
