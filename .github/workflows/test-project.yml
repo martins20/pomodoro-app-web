@@ -16,11 +16,6 @@ jobs:
       - name: Installing dependencies
         run: npm i
 
-      - name: Testing
+      - name: Testing ...
         run: npm run test
-        
-      - name: Buinding
-        run: npm run build
-        
-      - name: deploying into GH-Pages
-        run: npm run deploy
+
