@@ -1,9 +1,10 @@
-import { useState, InputHTMLAttributes, FC, ChangeEvent, KeyboardEvent } from "react"
+import { useState, InputHTMLAttributes, FC, ChangeEvent, KeyboardEvent, useMemo } from "react"
 
 import { Container, Input as StyledInput, ValidationMessage } from "./styles"
 
 type InputProps = {
   onInputSubmit: () => void
+  isValueValid?: boolean
 
   validation: {
     getInputValidation: () => boolean
@@ -11,8 +12,10 @@ type InputProps = {
   }
 } & InputHTMLAttributes<HTMLInputElement>
 
-export const Input: FC<InputProps> = ({ onInputSubmit, validation, ...rest }) => {
+export const Input: FC<InputProps> = ({ onInputSubmit, isValueValid, validation, ...rest }) => {
   const [isInputValid, setIsInputvalid] = useState(true)
+
+  const isInputTextValid = useMemo(() => isInputValid && isValueValid, [isInputValid, isValueValid])
 
   const handleInputSubmitByPressingEnterKey = (event: KeyboardEvent<HTMLInputElement>) => {
     const isEnterPressed = event.key.toLocaleLowerCase() === "enter"
@@ -39,14 +42,14 @@ export const Input: FC<InputProps> = ({ onInputSubmit, validation, ...rest }) =>
   }
 
   return (
-    <Container isInvalid={!isInputValid}>
+    <Container isInvalid={!isInputTextValid}>
       <StyledInput
         {...rest}
         onKeyUp={handleInputSubmitByPressingEnterKey}
-        isInvalid={!isInputValid}
+        isInvalid={!isInputTextValid}
         onChange={handleChange}
       />
-      <ValidationMessage>{validation.message}</ValidationMessage>
+      {!isInputTextValid && <ValidationMessage>{validation.message}</ValidationMessage>}
     </Container>
   )
 }

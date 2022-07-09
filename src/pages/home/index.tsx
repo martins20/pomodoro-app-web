@@ -9,9 +9,11 @@ import { Container, Content, TaskList } from "./styles"
 export const Home = () => {
   const [todos, setTodos] = useState<TodoDTO[]>([])
   const [todoText, setTodoText] = useState("")
+  const [isInputValid, setIsInputValid] = useState(true)
 
   const handleChangeTodoText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setTodoText(event.target.value)
+    setIsInputValid(true)
   }, [])
 
   const getIsInputValid = useCallback((): boolean => !!todoText, [todoText])
@@ -55,6 +57,16 @@ export const Home = () => {
     },
     [todos],
   )
+
+  const handleAddTodoByButton = useCallback(() => {
+    const isvalidationValid = getIsInputValid()
+
+    setIsInputValid(isvalidationValid)
+
+    if (!isvalidationValid) return
+
+    handleAddTodo()
+  }, [getIsInputValid])
 
   const inCommingTodos = useMemo(() => todos.filter((todo) => !todo.isCompleted), [todos])
   const completedTodos = useMemo(() => todos.filter((todo) => todo.isCompleted), [todos])
@@ -117,6 +129,7 @@ export const Home = () => {
             value={todoText}
             onChange={handleChangeTodoText}
             onInputSubmit={handleAddTodo}
+            isValueValid={isInputValid}
             placeholder="Add a task here"
             validation={{
               message: "Todo name is required",
@@ -124,7 +137,7 @@ export const Home = () => {
             }}
           />
 
-          <button onClick={handleAddTodo}>Add</button>
+          <button onClick={handleAddTodoByButton}>Add</button>
         </header>
 
         <TaskList hasCompletedTodo={!!completedTodos.length}>

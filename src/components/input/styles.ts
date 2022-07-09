@@ -10,11 +10,13 @@ export const Container = styled.section<DefaultProps>`
 
   width: 100%;
 
+  margin-bottom: 0.875rem;
+
   small {
     ${({ isInvalid }) =>
       isInvalid &&
       css`
-        visibility: visible;
+        margin: 0;
       `};
   }
 `
@@ -43,5 +45,6 @@ export const ValidationMessage = styled.small`
   color: var(--color-red);
   line-height: 1.6;
   letter-spacing: 0.05rem;
-  visibility: hidden;
+
+  margin-bottom: 0.2rem;
 `

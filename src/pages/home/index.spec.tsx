@@ -221,4 +221,14 @@ describe("Home", () => {
 
     expect(todoElement).toBeInTheDocument()
   })
+
+  it("Should not add a todo when user click into add button if input was empty", () => {
+    sutSpy.addTodoFromAddButton("")
+
+    const { getByText } = sut
+
+    const ValidationErrorMessageElement = getByText("Todo name is required")
+
+    expect(ValidationErrorMessageElement).toBeInTheDocument()
+  })
 })
