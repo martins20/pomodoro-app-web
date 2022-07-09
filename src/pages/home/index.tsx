@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useMemo, useCallback, useLayoutEffect } from "re
 
 import { TodoDTO } from "../../dtos"
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
-import { Input, OnTodoCheck, OnTodoDelete, Timer, Todo } from "../../components"
+import { Input, OnTodoCheck, OnTodoDelete, Sidebar, Timer, Todo } from "../../components"
 
 import { Container, Content, TaskList } from "./styles"
 
@@ -121,6 +121,8 @@ export const Home = () => {
 
   return (
     <Container data-testid="home">
+      <Sidebar />
+
       <Timer />
 
       <Content>

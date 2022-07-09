@@ -1,4 +1,5 @@
 import { CgTrashEmpty } from "react-icons/cg"
+import { BiAddToQueue } from "react-icons/bi"
 
 import { IconContract, IconName, IconProps } from "../../contracts/icon"
 
@@ -18,6 +19,9 @@ export class ReactIcons implements IconContract {
     switch (icon_name) {
       case "trash":
         return <CgTrashEmpty {...props} />
+
+      case "add":
+        return <BiAddToQueue {...props} />
 
       default:
         throw new Error("Icon name does not exist")

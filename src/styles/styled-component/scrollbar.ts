@@ -8,7 +8,6 @@ export const scrollbarCSS = css`
 
   ::-webkit-scrollbar-button {
     width: 1rem;
-    height: 1rem;
   }
 
   ::-webkit-scrollbar-thumb {
