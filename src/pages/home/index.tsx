@@ -123,6 +123,8 @@ export const Home = () => {
               getInputValidation: getIsInputValid,
             }}
           />
+
+          <button onClick={handleAddTodo}>Add</button>
         </header>
 
         <TaskList hasCompletedTodo={!!completedTodos.length}>

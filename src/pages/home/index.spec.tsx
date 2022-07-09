@@ -22,6 +22,14 @@ class SutSpy {
     return inputElement
   }
 
+  getAddButton(): HTMLElement {
+    const { getByText } = sut
+
+    const addButtonElement = getByText("Add")
+
+    return addButtonElement
+  }
+
   getTodoByName(name: string): HTMLElement {
     const { getByText } = sut
 
@@ -38,6 +46,16 @@ class SutSpy {
     fireEvent.keyUp(inputElement, {
       key: "Enter",
     })
+  }
+
+  addTodoFromAddButton(todoName: string): void {
+    const inputElement = this.getInput()
+
+    fireEvent.change(inputElement, { target: { value: todoName } })
+
+    const addButtonElement = this.getAddButton()
+
+    fireEvent.click(addButtonElement)
   }
 
   mockGetItemResponse(data: object[]) {
@@ -194,5 +212,13 @@ describe("Home", () => {
     fireEvent.click(deleteButtonElement)
 
     expect(localStorageSetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_TODO_KEY_NAME, "[]")
+  })
+
+  it("Should add a todo when user click into add button", () => {
+    sutSpy.addTodoFromAddButton("TODO 01")
+
+    const todoElement = sutSpy.getTodoByName("TODO 01")
+
+    expect(todoElement).toBeInTheDocument()
   })
 })

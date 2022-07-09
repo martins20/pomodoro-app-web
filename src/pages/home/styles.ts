@@ -31,10 +31,26 @@ export const Content = styled.section`
 
   > header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 
     gap: 0.5rem;
+
+    > button {
+      background: transparent;
+      border: 2px solid var(--color-white);
+
+      padding: 0.7rem;
+
+      font-size: 1.2rem;
+      border-radius: 8px;
+
+      transition: background, border-color 0.25s;
+
+      :hover {
+        background: var(--color-green);
+        border-color: var(--color-green);
+      }
+    }
   }
 `
 
