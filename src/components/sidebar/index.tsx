@@ -1,14 +1,24 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
+import { useCollection } from "../../hooks"
 import { Icon } from "../icon"
 
-import { Container, Header, Content, Footer } from "./styles"
+import { Container, Header, Content, Collection, Footer } from "./styles"
 
 export const Sidebar = () => {
-  const [collections, setCollections] = useState<string[]>([])
+  const { collections, addNewCollection, selectedCollection, selectCollection } = useCollection()
 
   const Collections = useMemo(
-    () => collections.map((collection) => <button>{collection}</button>),
-    [collections],
+    () =>
+      collections.map((collection) => (
+        <Collection
+          key={collection.id}
+          isSelected={collection.id === selectedCollection?.id}
+          onClick={() => selectCollection(collection.id)}
+        >
+          {collection.name}
+        </Collection>
+      )),
+    [collections, selectedCollection],
   )
 
   return (
@@ -22,7 +32,9 @@ export const Sidebar = () => {
       <Footer>
         <button
           onClick={() => {
-            setCollections((state) => [...state, String(state.length + 1)])
+            addNewCollection({
+              name: "Qualquer nome",
+            })
           }}
         >
           Add a new collection

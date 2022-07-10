@@ -1,7 +1,8 @@
 /* eslint-disable no-proto */
-import { cleanup, fireEvent, render, RenderResult, waitFor } from "@testing-library/react"
+import { cleanup, fireEvent, render, RenderResult, waitFor } from "../../test/testing-library"
 import { Home as Sut } from "."
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
+
 import { TodoDTO } from "../../dtos"
 
 const localStorageSetItemSpy = jest.spyOn(window.localStorage.__proto__, "setItem")

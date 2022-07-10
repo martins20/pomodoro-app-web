@@ -1,4 +1,4 @@
-import { fireEvent, render, RenderResult } from "@testing-library/react"
+import { fireEvent, render, RenderResult } from "../../test/testing-library"
 import { Todo, TodoProps } from "."
 
 let sut: RenderResult

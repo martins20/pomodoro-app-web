@@ -5,11 +5,14 @@ import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
 import { Input, OnTodoCheck, OnTodoDelete, Sidebar, Timer, Todo } from "../../components"
 
 import { Container, Content, TaskList } from "./styles"
+import { useCollection } from "../../hooks"
 
 export const Home = () => {
   const [todos, setTodos] = useState<TodoDTO[]>([])
   const [todoText, setTodoText] = useState("")
   const [isInputValid, setIsInputValid] = useState(true)
+
+  const { collections } = useCollection()
 
   const handleChangeTodoText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setTodoText(event.target.value)

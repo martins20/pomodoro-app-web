@@ -1,4 +1,4 @@
-import { cleanup, render, RenderResult } from "@testing-library/react"
+import { cleanup, render, RenderResult } from "../../test/testing-library"
 
 import { Icon as Sut } from "."
 import { IconName } from "../../services/contracts"

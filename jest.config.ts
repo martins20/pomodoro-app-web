@@ -31,6 +31,7 @@ export default {
     "<rootDir>/src/main.tsx",
     "<rootDir>/src/lib",
     "<rootDir>/src/services",
+    "<rootDir>/src/test",
   ],
 
   // Indicates which provider should be used to instrument code for coverage

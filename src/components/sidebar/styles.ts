@@ -1,5 +1,8 @@
-import styled from "styled-components"
-import { scrollbarCSS } from "../../styles/styled-component"
+import styled, { css } from "styled-components"
+
+type CollectionProps = {
+  isSelected: boolean
+}
 
 export const Container = styled.aside`
   display: flex;
@@ -31,27 +34,33 @@ export const Content = styled.section`
   height: 100%;
 
   overflow-y: auto;
+`
 
-  > button {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
+export const Collection = styled.button<CollectionProps>`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
 
-    border: 0;
-    background: transparent;
+  border: 0;
+  background: transparent;
 
-    padding: 1rem;
+  padding: 1rem;
 
-    font-size: 0.875rem;
+  font-size: 0.875rem;
 
-    transition: background 0.2s;
-    text-transform: capitalize;
+  transition: background 0.2s;
+  text-transform: capitalize;
 
-    &:hover {
-      background: var(--color-gray-400);
-    }
+  &:hover {
+    background: var(--color-gray-400);
   }
+
+  ${({ isSelected }) =>
+    isSelected &&
+    css`
+      background: var(--color-gray-400);
+    `}
 `
 
 export const Footer = styled.footer`

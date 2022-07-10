@@ -1,4 +1,4 @@
-import { cleanup, render, RenderResult, fireEvent, waitFor } from "@testing-library/react"
+import { cleanup, render, RenderResult, fireEvent, waitFor } from "../../test/testing-library"
 
 import { Timer as Sut, TimerMode, TimerProps } from "."
 

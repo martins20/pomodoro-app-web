@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, RenderResult } from "@testing-library/react"
+import { cleanup, fireEvent, render, RenderResult } from "../../test/testing-library"
 
 import { Button as Sut } from "."
 
