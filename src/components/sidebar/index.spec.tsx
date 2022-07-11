@@ -6,6 +6,10 @@ import { CollectionDTO } from "../../dtos"
 let sut: RenderResult
 
 const mockCollections: CollectionDTO[] = []
+let mockSelectedCollection: CollectionDTO | undefined
+const mockSelectCollection = jest.fn().mockImplementation((collection_id: string) => {
+  mockSelectedCollection = mockCollections.find((collection) => collection.id === collection_id)
+})
 const mockAddNewCollection = jest.fn().mockImplementation(() => {
   const mockCollectionPositionInString = String(mockCollections.length + 1)
 
@@ -21,6 +25,8 @@ jest.mock("../../hooks", () => ({
   useCollection: () => ({
     collections: mockCollections,
     addNewCollection: mockAddNewCollection,
+    selectCollection: mockSelectCollection,
+    selectedCollection: mockSelectedCollection,
   }),
 }))
 
@@ -45,5 +51,20 @@ describe("Sidebar", () => {
     fireEvent.click(addNewCollectionButtonElement)
 
     expect(mockAddNewCollection).toHaveBeenCalledTimes(1)
+  })
+
+  it("Should select a collection whe user clicks into some collection", () => {
+    const { getByText } = sut
+
+    const addNewCollectionButtonElement = getByText("Add a new collection")
+
+    fireEvent.click(addNewCollectionButtonElement)
+    fireEvent.click(addNewCollectionButtonElement)
+
+    const firstCollectionElement = getByText("1")
+
+    fireEvent.click(firstCollectionElement)
+
+    expect(mockSelectCollection).toHaveBeenCalledWith("1")
   })
 })

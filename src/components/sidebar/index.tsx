@@ -12,7 +12,7 @@ export const Sidebar = () => {
       collections.map((collection) => (
         <Collection
           key={collection.id}
-          isSelected={collection.id === selectedCollection?.id}
+          isSelected={selectedCollection?.id === collection.id}
           onClick={() => selectCollection(collection.id)}
         >
           {collection.name}
