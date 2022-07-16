@@ -160,8 +160,6 @@ export const Home = () => {
           </TaskList>
         </Content>
       </Container>
-
-      <Modal isVisible />
     </>
   )
 }

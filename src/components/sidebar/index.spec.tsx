@@ -22,6 +22,7 @@ const mockAddNewCollection = jest.fn().mockImplementation(() => {
 })
 
 jest.mock("../../hooks", () => ({
+  ...jest.requireActual("../../hooks"),
   useCollection: () => ({
     collections: mockCollections,
     addNewCollection: mockAddNewCollection,

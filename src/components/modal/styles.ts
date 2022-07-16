@@ -22,6 +22,8 @@ export const Container = styled.main`
   width: 80%;
   height: 80%;
 
+  max-width: 1000px;
+
   display: flex;
   flex-direction: column;
 

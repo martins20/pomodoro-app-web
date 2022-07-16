@@ -1,6 +1,10 @@
 import { FC, PropsWithChildren } from "react"
+
+import { ModalProvider } from "./modal"
 import { CollectionProvider } from "./collection"
 
 export const AppProvider: FC<PropsWithChildren> = ({ children }) => (
-  <CollectionProvider>{children}</CollectionProvider>
+  <ModalProvider>
+    <CollectionProvider>{children}</CollectionProvider>
+  </ModalProvider>
 )

@@ -1,6 +1,7 @@
-import { FC, PropsWithChildren, useState } from "react"
+import { FC, PropsWithChildren } from "react"
 
 import { Icon } from "../icon"
+import { useModal } from "../../hooks"
 
 import { Overlay, Container } from "./styles"
 
@@ -9,19 +10,15 @@ export type ModalProps = {
 }
 
 export const Modal: FC<PropsWithChildren<ModalProps>> = ({ children, isVisible }) => {
-  const [isModalVisible, setIsModalVisible] = useState(!!isVisible)
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false)
-  }
+  const { toggleModalVisibility } = useModal()
 
   return (
     <>
-      {isModalVisible && (
+      {isVisible && (
         <Overlay>
           <Container data-testid="modal">
             <header>
-              <button data-testid="close-modal-button" onClick={handleCloseModal}>
+              <button data-testid="close-modal-button" onClick={toggleModalVisibility}>
                 <Icon type="close" size={25} />
               </button>
             </header>

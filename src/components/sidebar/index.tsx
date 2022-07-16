@@ -1,11 +1,25 @@
 import { useMemo } from "react"
-import { useCollection } from "../../hooks"
+
 import { Icon } from "../icon"
+import { useCollection, useModal } from "../../hooks"
 
 import { Container, Header, Content, Collection, Footer } from "./styles"
 
 export const Sidebar = () => {
-  const { collections, addNewCollection, selectedCollection, selectCollection } = useCollection()
+  const { toggleModalVisibility, setModalContent } = useModal()
+  const { collections, selectedCollection, selectCollection } = useCollection()
+
+  const handleCreateNewCollection = () => {
+    setModalContent(
+      <div>
+        <h1>Hello World From Sidebar</h1>
+
+        <input type="text" />
+      </div>,
+    )
+
+    toggleModalVisibility()
+  }
 
   const Collections = useMemo(
     () =>
@@ -30,13 +44,7 @@ export const Sidebar = () => {
       <Content>{Collections}</Content>
 
       <Footer>
-        <button
-          onClick={() => {
-            addNewCollection({
-              name: "Qualquer nome",
-            })
-          }}
-        >
+        <button onClick={handleCreateNewCollection}>
           Add a new collection
           <Icon type="add" size={16} />
         </button>
