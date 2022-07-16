@@ -5,27 +5,28 @@ import { CollectionDTO } from "../../dtos"
 
 let sut: RenderResult
 
-const mockCollections: CollectionDTO[] = []
+const mockCollections: CollectionDTO[] = [
+  {
+    id: "collection-one",
+    todos: [],
+    name: "First collection",
+    createdAt: new Date(),
+  },
+]
 let mockSelectedCollection: CollectionDTO | undefined
 const mockSelectCollection = jest.fn().mockImplementation((collection_id: string) => {
   mockSelectedCollection = mockCollections.find((collection) => collection.id === collection_id)
 })
-const mockAddNewCollection = jest.fn().mockImplementation(() => {
-  const mockCollectionPositionInString = String(mockCollections.length + 1)
 
-  mockCollections.push({
-    id: mockCollectionPositionInString,
-    name: mockCollectionPositionInString,
-    todos: [],
-    createdAt: new Date(),
-  })
-})
+const mockToggleModalVisibility = jest.fn().mockImplementation(() => false)
 
 jest.mock("../../hooks", () => ({
-  ...jest.requireActual("../../hooks"),
+  useModal: () => ({
+    toggleModalVisibility: mockToggleModalVisibility,
+    setModalContent: jest.fn(),
+  }),
   useCollection: () => ({
     collections: mockCollections,
-    addNewCollection: mockAddNewCollection,
     selectCollection: mockSelectCollection,
     selectedCollection: mockSelectedCollection,
   }),
@@ -51,21 +52,16 @@ describe("Sidebar", () => {
 
     fireEvent.click(addNewCollectionButtonElement)
 
-    expect(mockAddNewCollection).toHaveBeenCalledTimes(1)
+    expect(mockToggleModalVisibility).toHaveBeenCalledTimes(1)
   })
 
   it("Should select a collection whe user clicks into some collection", () => {
     const { getByText } = sut
 
-    const addNewCollectionButtonElement = getByText("Add a new collection")
-
-    fireEvent.click(addNewCollectionButtonElement)
-    fireEvent.click(addNewCollectionButtonElement)
-
-    const firstCollectionElement = getByText("1")
+    const firstCollectionElement = getByText("First collection")
 
     fireEvent.click(firstCollectionElement)
 
-    expect(mockSelectCollection).toHaveBeenCalledWith("1")
+    expect(mockSelectCollection).toHaveBeenCalledWith("collection-one")
   })
 })

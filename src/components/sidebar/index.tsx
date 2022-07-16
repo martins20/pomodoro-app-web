@@ -5,18 +5,14 @@ import { useCollection, useModal } from "../../hooks"
 
 import { Container, Header, Content, Collection, Footer } from "./styles"
 
+import { CreateCollection } from "../forms/create-collection"
+
 export const Sidebar = () => {
   const { toggleModalVisibility, setModalContent } = useModal()
   const { collections, selectedCollection, selectCollection } = useCollection()
 
   const handleCreateNewCollection = () => {
-    setModalContent(
-      <div>
-        <h1>Hello World From Sidebar</h1>
-
-        <input type="text" />
-      </div>,
-    )
+    setModalContent(<CreateCollection />)
 
     toggleModalVisibility()
   }
