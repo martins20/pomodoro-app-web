@@ -37,4 +37,14 @@ describe("form Create collection", () => {
       expect.objectContaining({ name: collectionName }),
     )
   })
+
+  it("Should not create a new collection with an empty collection name", () => {
+    const { getByText } = sut
+
+    const addButtonElement = getByText("Add")
+
+    fireEvent.click(addButtonElement)
+
+    expect(mockAddNewCollection).not.toHaveBeenCalled()
+  })
 })
