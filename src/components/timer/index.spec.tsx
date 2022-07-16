@@ -88,20 +88,20 @@ describe("Timer", () => {
     expect(RestTextElement).toBeTruthy()
   })
 
-  it("Should be able to timer be 25 minutes by default in focus mode.", () => {
+  it("Should be able to timer be 45 minutes by default in focus mode.", () => {
     const { getByText } = sut
 
-    const MinutesElement = getByText("25:00")
+    const MinutesElement = getByText("45:00")
 
     expect(MinutesElement).toBeTruthy()
   })
 
-  it("Should be able to timer be 5 minutes by default in rest mode.", () => {
+  it("Should be able to timer be 15 minutes by default in rest mode.", () => {
     sutSpy.setMode("rest")
 
     const { getByText } = sut
 
-    const MinutesElement = getByText("05:00")
+    const MinutesElement = getByText("15:00")
 
     expect(MinutesElement).toBeTruthy()
   })
