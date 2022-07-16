@@ -14,8 +14,8 @@ export type TimerProps = {
 
 export const Timer: FC<TimerProps> = ({
   mode = "focus",
-  rest_time_in_minutes = 5,
-  focus_time_in_minutes = 25,
+  rest_time_in_minutes = 15,
+  focus_time_in_minutes = 45,
 }) => {
   const formatTimeNumber = (time_in_seconds: number): string => {
     const minutes = Math.floor(time_in_seconds / 60)
