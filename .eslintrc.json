@@ -33,6 +33,7 @@
     "react/button-has-type": "off",
     "no-useless-constructor": "off",
     "no-use-before-define": "off",
+    "react/jsx-no-useless-fragment": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

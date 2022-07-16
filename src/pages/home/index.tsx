@@ -2,7 +2,7 @@ import { ChangeEvent, useState, useMemo, useCallback, useLayoutEffect } from "re
 
 import { TodoDTO } from "../../dtos"
 import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
-import { Input, OnTodoCheck, OnTodoDelete, Sidebar, Timer, Todo } from "../../components"
+import { Input, OnTodoCheck, OnTodoDelete, Sidebar, Timer, Todo, Modal } from "../../components"
 
 import { Container, Content, TaskList } from "./styles"
 
@@ -120,44 +120,48 @@ export const Home = () => {
   }, [])
 
   return (
-    <Container data-testid="home">
-      <Sidebar />
+    <>
+      <Container data-testid="home">
+        <Sidebar />
 
-      <Timer />
+        <Timer />
 
-      <Content>
-        <header>
-          <Input
-            value={todoText}
-            onChange={handleChangeTodoText}
-            onInputSubmit={handleAddTodo}
-            isValueValid={isInputValid}
-            placeholder="Add a task here"
-            validation={{
-              message: "Todo name is required",
-              getInputValidation: getIsInputValid,
-            }}
-          />
+        <Content>
+          <header>
+            <Input
+              value={todoText}
+              onChange={handleChangeTodoText}
+              onInputSubmit={handleAddTodo}
+              isValueValid={isInputValid}
+              placeholder="Add a task here"
+              validation={{
+                message: "Todo name is required",
+                getInputValidation: getIsInputValid,
+              }}
+            />
 
-          <button onClick={handleAddTodoByButton}>Add</button>
-        </header>
+            <button onClick={handleAddTodoByButton}>Add</button>
+          </header>
 
-        <TaskList hasCompletedTodo={!!completedTodos.length}>
-          <div>
-            <h3>Tasks - {inCommingTodos.length}</h3>
-
-            {IncommingTodos}
-          </div>
-
-          {!!completedTodos.length && (
+          <TaskList hasCompletedTodo={!!completedTodos.length}>
             <div>
-              <h3>Completed - {completedTodos.length} </h3>
+              <h3>Tasks - {inCommingTodos.length}</h3>
 
-              {CompletedTodos}
+              {IncommingTodos}
             </div>
-          )}
-        </TaskList>
-      </Content>
-    </Container>
+
+            {!!completedTodos.length && (
+              <div>
+                <h3>Completed - {completedTodos.length} </h3>
+
+                {CompletedTodos}
+              </div>
+            )}
+          </TaskList>
+        </Content>
+      </Container>
+
+      <Modal isVisible />
+    </>
   )
 }

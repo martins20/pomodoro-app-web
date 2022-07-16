@@ -1,3 +1,4 @@
+import { IoClose } from "react-icons/io5"
 import { CgTrashEmpty } from "react-icons/cg"
 import { BiAddToQueue } from "react-icons/bi"
 
@@ -22,6 +23,9 @@ export class ReactIcons implements IconContract {
 
       case "add":
         return <BiAddToQueue {...props} />
+
+      case "close":
+        return <IoClose {...props} />
 
       default:
         throw new Error("Icon name does not exist")
