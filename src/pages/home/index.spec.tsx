@@ -1,7 +1,7 @@
 /* eslint-disable no-proto */
 import { cleanup, fireEvent, render, RenderResult, waitFor } from "../../test/testing-library"
 import { Home as Sut } from "."
-import { LOCAL_STORAGE_TODO_KEY_NAME } from "../../constants"
+import { LOCAL_STORAGE_COLLECTION_KEY_NAME } from "../../constants"
 
 import { TodoDTO } from "../../dtos"
 
@@ -156,7 +156,7 @@ describe("Home", () => {
     sutSpy.addTodo("Todo 01")
 
     expect(localStorageSetItemSpy).toHaveBeenCalledWith(
-      LOCAL_STORAGE_TODO_KEY_NAME,
+      LOCAL_STORAGE_COLLECTION_KEY_NAME,
       expect.stringMatching(JSON.stringify([todoData])),
     )
   })
@@ -171,7 +171,7 @@ describe("Home", () => {
 
     sutSpy.mockGetItemResponse([todoData])
 
-    expect(localStorageGetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_TODO_KEY_NAME)
+    expect(localStorageGetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_COLLECTION_KEY_NAME)
   })
 
   it("Should set completed todo on localStorage when user complete one", () => {
@@ -191,7 +191,7 @@ describe("Home", () => {
     fireEvent.click(checkBoxTodoElement)
 
     expect(localStorageSetItemSpy).toHaveBeenCalledWith(
-      LOCAL_STORAGE_TODO_KEY_NAME,
+      LOCAL_STORAGE_COLLECTION_KEY_NAME,
       expect.stringMatching(JSON.stringify({ ...todoData, isCompleted: true })),
     )
   })
@@ -212,7 +212,7 @@ describe("Home", () => {
 
     fireEvent.click(deleteButtonElement)
 
-    expect(localStorageSetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_TODO_KEY_NAME, "[]")
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_COLLECTION_KEY_NAME, "[]")
   })
 
   it("Should add a todo when user click into add button", () => {
