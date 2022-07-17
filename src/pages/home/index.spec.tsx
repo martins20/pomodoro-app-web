@@ -138,4 +138,22 @@ describe("Home", () => {
       expect(todoElement).toBeInTheDocument()
     })
   })
+
+  it("Should not add a todo with empty todo name", async () => {
+    const collectionName = "Collection One"
+
+    sutSpy.addCollection(collectionName)
+
+    await waitFor(async () => {
+      const addTodoButton = sutSpy.getAddButton()
+
+      fireEvent.click(addTodoButton)
+
+      const { queryByText } = sut
+
+      const validationTextElement = queryByText("Todo name is required")
+
+      expect(validationTextElement).toBeInTheDocument()
+    })
+  })
 })
