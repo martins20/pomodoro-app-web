@@ -195,4 +195,44 @@ describe("Home", () => {
       expect(completedLabelElement).not.toBeInTheDocument()
     })
   })
+
+  it("Should dete a todo from tasks section", async () => {
+    sutSpy.selectCollection("Collection One")
+
+    const { getByTestId, queryByText } = sut
+    const deleteTodoButtonElement = getByTestId(`delete_${todoId}`)
+
+    fireEvent.click(deleteTodoButtonElement)
+
+    await waitFor(async () => {
+      const todoElement = queryByText("Todo 03")
+
+      expect(todoElement).not.toBeInTheDocument()
+    })
+  })
+
+  it("Should dete a todo from tasks section", async () => {
+    sutSpy.selectCollection("Collection One")
+
+    const { getByTestId, queryByText } = sut
+
+    jest.spyOn(Date, "now").mockImplementationOnce(() => todoId)
+
+    const todoName = "Todo 03"
+    sutSpy.addTodoFromAddButton(todoName)
+
+    const completeTodoCheckBoxElement = getByTestId(`checkbox_${todoId}`)
+
+    fireEvent.click(completeTodoCheckBoxElement)
+
+    const deleteTodoButtonElement = getByTestId(`delete_${todoId}`)
+
+    fireEvent.click(deleteTodoButtonElement)
+
+    await waitFor(async () => {
+      const todoElement = queryByText("Todo 03")
+
+      expect(todoElement).not.toBeInTheDocument()
+    })
+  })
 })
