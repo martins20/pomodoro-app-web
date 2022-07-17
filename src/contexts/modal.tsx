@@ -7,7 +7,7 @@ export type ModalContextData = {
   setModalContent: (content: JSX.Element) => void
 }
 
-export const ModalContext = createContext<ModalContextData>({} as ModalContextData)
+export const ModalContextData = createContext<ModalContextData>({} as ModalContextData)
 
 export const ModalProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -28,8 +28,8 @@ export const ModalProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 
   return (
-    <ModalContext.Provider value={modalContextData}>
+    <ModalContextData.Provider value={modalContextData}>
       {children} <Modal isVisible={isModalVisible}>{content}</Modal>
-    </ModalContext.Provider>
+    </ModalContextData.Provider>
   )
 }
