@@ -29,13 +29,13 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const addNewCollection = useCallback(
     ({ name }: CreateCollectionDTO) => {
-      const createdAt = new Date()
+      const createdAt = Date.now()
 
       const collection: CollectionDTO = {
-        id: createdAt.toISOString(),
+        id: createdAt.toString(),
         name,
         todos: [],
-        createdAt,
+        createdAt: new Date(),
       }
 
       const updatedCollections = [...collections, collection]

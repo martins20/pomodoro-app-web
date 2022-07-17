@@ -5,6 +5,8 @@ let sut: RenderResult
 
 const makeSUT = (): RenderResult => render(<Sut />)
 
+const todoId = 123412341234
+
 class SutSpy {
   getInput(): HTMLElement {
     const { getByPlaceholderText } = sut
@@ -58,6 +60,14 @@ class SutSpy {
     return collectionElement
   }
 
+  selectCollection(collectionName: string): void {
+    const { getByText } = sut
+
+    const collectionElement = getByText(collectionName)
+
+    fireEvent.click(collectionElement)
+  }
+
   addCollection(collectionName: string): void {
     const { getByText, getByPlaceholderText } = sut
 
@@ -108,9 +118,7 @@ describe("Home", () => {
   })
 
   it("Should add a new TODO into selected collection", async () => {
-    const collectionName = "Collection One"
-
-    sutSpy.addCollection(collectionName)
+    sutSpy.selectCollection("Collection One")
 
     const todoName = "Todo 01"
 
@@ -124,11 +132,9 @@ describe("Home", () => {
   })
 
   it("Should add a new TODO into selected collection by pressing add button", async () => {
-    const collectionName = "Collection One"
+    sutSpy.selectCollection("Collection One")
 
-    sutSpy.addCollection(collectionName)
-
-    const todoName = "Todo 01"
+    const todoName = "Todo 02"
 
     sutSpy.addTodoFromAddButton(todoName)
 
@@ -140,9 +146,7 @@ describe("Home", () => {
   })
 
   it("Should not add a todo with empty todo name", async () => {
-    const collectionName = "Collection One"
-
-    sutSpy.addCollection(collectionName)
+    sutSpy.selectCollection("Collection One")
 
     await waitFor(async () => {
       const addTodoButton = sutSpy.getAddButton()
@@ -154,6 +158,41 @@ describe("Home", () => {
       const validationTextElement = queryByText("Todo name is required")
 
       expect(validationTextElement).toBeInTheDocument()
+    })
+  })
+
+  it("Should complete a todo from tasks section", async () => {
+    sutSpy.selectCollection("Collection One")
+
+    jest.spyOn(Date, "now").mockImplementationOnce(() => todoId)
+
+    const todoName = "Todo 03"
+    sutSpy.addTodoFromAddButton(todoName)
+
+    const { getByTestId, queryByText } = sut
+    const completeTodoCheckBoxElement = getByTestId(`checkbox_${todoId}`)
+
+    fireEvent.click(completeTodoCheckBoxElement)
+
+    await waitFor(async () => {
+      const completedLabelElement = queryByText("Completed - 1")
+
+      expect(completedLabelElement).toBeInTheDocument()
+    })
+  })
+
+  it("Should complete a todo from completed section", async () => {
+    sutSpy.selectCollection("Collection One")
+
+    const { getByTestId, queryByText } = sut
+    const completeTodoCheckBoxElement = getByTestId(`checkbox_${todoId}`)
+
+    fireEvent.click(completeTodoCheckBoxElement)
+
+    await waitFor(async () => {
+      const completedLabelElement = queryByText("Completed - 1")
+
+      expect(completedLabelElement).not.toBeInTheDocument()
     })
   })
 })
