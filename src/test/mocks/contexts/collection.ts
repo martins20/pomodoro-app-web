@@ -2,10 +2,15 @@ import { CollectionContextData } from "../../../contexts/collection"
 import { CreateCollectionDTO } from "../../../dtos"
 
 const collections: CollectionContextData["collections"] = [
-  { id: "1", name: "Collection One", todos: [], createdAt: new Date() },
+  {
+    id: "1",
+    name: "Collection One",
+    todos: [{ id: "one", name: "Todo One", isCompleted: false, createdAt: new Date() }],
+    createdAt: new Date(),
+  },
 ]
 
-export const mockCollectionContextData: CollectionContextData = {
+export const mockCollectionContextData = {
   collections,
   addTodoIntoCollection: jest.fn(),
   addNewCollection: jest.fn().mockImplementation(({ name }: CreateCollectionDTO) => {
@@ -21,6 +26,11 @@ export const mockCollectionContextData: CollectionContextData = {
     collections.push(collection)
   }),
   deleteTodoFromCollection: jest.fn(),
-  selectCollection: jest.fn(),
+  selectCollection: {
+    id: "1",
+    name: "Collection One",
+    todos: [{ id: "one", name: "Todo One", isCompleted: false, createdAt: new Date() }],
+    createdAt: new Date(),
+  },
   toggleTodoCompleteFromCollection: jest.fn(),
 }

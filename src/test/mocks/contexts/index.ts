@@ -1,7 +1,9 @@
 import { mockCollectionContextData } from "./collection"
 import { mockModalContextData } from "./modal"
 
-jest.mock("../../../hooks", () => ({
+export const mockContexts = {
   useModal: () => mockModalContextData,
   useCollection: () => mockCollectionContextData,
-}))
+}
+
+jest.mock("../../../hooks", () => ({ ...jest.requireActual("../../../hooks") }))

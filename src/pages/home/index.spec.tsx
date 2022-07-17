@@ -1,8 +1,5 @@
 import { Home as Sut } from "."
-import { fireEvent, render, RenderResult } from "../../test/testing-library"
-
-import { mockModalContextData } from "../../test/mocks/contexts/modal"
-import { mockCollectionContextData } from "../../test/mocks/contexts/collection"
+import { cleanup, fireEvent, render, RenderResult, waitFor } from "../../test/testing-library"
 
 let sut: RenderResult
 
@@ -25,10 +22,10 @@ class SutSpy {
     return addButtonElement
   }
 
-  getTodoByName(name: string): HTMLElement {
-    const { getByText } = sut
+  getTodoByName(name: string): HTMLElement | null {
+    const { queryByText } = sut
 
-    const TodoElement = getByText(name)
+    const TodoElement = queryByText(name)
 
     return TodoElement
   }
@@ -52,6 +49,30 @@ class SutSpy {
 
     fireEvent.click(addButtonElement)
   }
+
+  getByCollectionName(collectionName: string): HTMLElement | null {
+    const { queryByText } = sut
+
+    const collectionElement = queryByText(collectionName)
+
+    return collectionElement
+  }
+
+  addCollection(collectionName: string): void {
+    const { getByText, getByPlaceholderText } = sut
+
+    const addNewCollectionElement = getByText("Add a new collection")
+
+    fireEvent.click(addNewCollectionElement)
+
+    const collectionInputElement = getByPlaceholderText("Enter a collection name here")
+
+    fireEvent.change(collectionInputElement, { target: { value: collectionName } })
+
+    const addCollectionButtonElement = getByText("Add")
+
+    fireEvent.click(addCollectionButtonElement)
+  }
 }
 
 let sutSpy: SutSpy
@@ -62,6 +83,10 @@ describe("Home", () => {
     sutSpy = new SutSpy()
   })
 
+  afterEach(() => {
+    cleanup()
+  })
+
   it("Should render home component", () => {
     const { getByTestId } = sut
 
@@ -70,19 +95,31 @@ describe("Home", () => {
     expect(ContainerElement).toBeInTheDocument()
   })
 
-  it("Should call a context method for create a new collection", async () => {
-    const { getByText } = sut
+  it("Should create a new collection", async () => {
+    const collectionName = "Collection One"
 
-    const addNewCollectionElement = getByText("Add a new collection")
+    sutSpy.addCollection(collectionName)
 
-    mockModalContextData.toggleModalVisibility.mockImplementationOnce(() => {
-      mockCollectionContextData.addNewCollection({
-        name: "Collection One",
-      })
+    await waitFor(async () => {
+      const collectionElement = sutSpy.getByCollectionName(collectionName)
+
+      expect(collectionElement).toBeInTheDocument()
     })
+  })
 
-    fireEvent.click(addNewCollectionElement)
+  it("Should add a new TODO into selected collection", async () => {
+    const collectionName = "Collection One"
 
-    expect(mockModalContextData.toggleModalVisibility).toHaveBeenCalledTimes(1)
+    sutSpy.addCollection(collectionName)
+
+    const todoName = "Todo 01"
+
+    sutSpy.addTodo(todoName)
+
+    await waitFor(async () => {
+      const todoElement = sutSpy.getTodoByName(todoName)
+
+      expect(todoElement).toBeInTheDocument()
+    })
   })
 })
