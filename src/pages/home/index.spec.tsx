@@ -122,4 +122,20 @@ describe("Home", () => {
       expect(todoElement).toBeInTheDocument()
     })
   })
+
+  it("Should add a new TODO into selected collection by pressing add button", async () => {
+    const collectionName = "Collection One"
+
+    sutSpy.addCollection(collectionName)
+
+    const todoName = "Todo 01"
+
+    sutSpy.addTodoFromAddButton(todoName)
+
+    await waitFor(async () => {
+      const todoElement = sutSpy.getTodoByName(todoName)
+
+      expect(todoElement).toBeInTheDocument()
+    })
+  })
 })
