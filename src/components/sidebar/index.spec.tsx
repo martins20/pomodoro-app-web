@@ -20,6 +20,8 @@ const mockSelectCollection = jest.fn().mockImplementation((collection_id: string
 
 const mockToggleModalVisibility = jest.fn().mockImplementation(() => false)
 
+const mockDeleteCollection = jest.fn()
+
 jest.mock("../../hooks", () => ({
   useModal: () => ({
     toggleModalVisibility: mockToggleModalVisibility,
@@ -29,6 +31,7 @@ jest.mock("../../hooks", () => ({
     collections: mockCollections,
     selectCollection: mockSelectCollection,
     selectedCollection: mockSelectedCollection,
+    deleteCollection: mockDeleteCollection,
   }),
 }))
 
@@ -63,5 +66,14 @@ describe("Sidebar", () => {
     fireEvent.click(firstCollectionElement)
 
     expect(mockSelectCollection).toHaveBeenCalledWith("collection-one")
+  })
+
+  it("Should delete a collection by clicking into tash button icon", () => {
+    const { getByTestId } = sut
+
+    const deleteCollectionButtonElement = getByTestId(`delete-collection_${mockCollections[0].id}`)
+    fireEvent.click(deleteCollectionButtonElement)
+
+    expect(mockDeleteCollection).toHaveBeenLastCalledWith(mockCollections[0].id)
   })
 })

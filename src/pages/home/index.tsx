@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useMemo, useCallback } from "react"
+import { ChangeEvent, useState, useMemo, useCallback, useEffect } from "react"
 
 import { Input, Sidebar, Timer, Todo } from "../../components"
 
@@ -65,7 +65,7 @@ export const Home = () => {
         ))}
       </section>
     ),
-    [inCommingTodos],
+    [inCommingTodos, selectedCollection],
   )
 
   const CompletedTodos = useMemo(
@@ -84,8 +84,14 @@ export const Home = () => {
         ))}
       </section>
     ),
-    [completedTodos],
+    [completedTodos, selectedCollection],
   )
+
+  const shouldDisplayTodoContent = useMemo(() => !!selectedCollection, [selectedCollection])
+
+  // useEffect(() => {
+  //   console.log({ selectedCollection })
+  // }, [selectedCollection])
 
   return (
     <>
@@ -94,7 +100,7 @@ export const Home = () => {
 
         <Timer />
 
-        {selectedCollection && (
+        {shouldDisplayTodoContent && (
           <Content>
             <header>
               <Input

@@ -6,6 +6,7 @@ import {
   useMemo,
   useState,
   useLayoutEffect,
+  useEffect,
 } from "react"
 import { LOCAL_STORAGE_COLLECTION_KEY_NAME } from "../constants"
 
@@ -17,6 +18,7 @@ export type CollectionContextData = {
   addTodoIntoCollection: (todo: CreateTodoDTO) => void
   addNewCollection: (data: CreateCollectionDTO) => void
   deleteTodoFromCollection: (todo_id: TodoDTO["id"]) => void
+  deleteCollection: (collection_id: CollectionDTO["id"]) => void
   selectCollection: (collection_id: CollectionDTO["id"]) => void
   toggleTodoCompleteFromCollection: (todo_id: TodoDTO["id"]) => void
 }
@@ -130,9 +132,40 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
     [collections, setSelectedCollection],
   )
 
+  const deleteCollection = useCallback(
+    (collection_id: CollectionDTO["id"]): void => {
+      const foundCollection = collections.find((collection) => collection.id === collection_id)
+
+      if (!foundCollection) throw new Error("Cannot delete a non-existent collection")
+
+      const collectionsWithoutDeletedOne = collections.filter(
+        (collection) => collection.id !== collection_id,
+      )
+
+      setCollections(collectionsWithoutDeletedOne)
+
+      if (!selectedCollection) return
+
+      console.log(selectedCollection.id === collection_id)
+
+      if (selectedCollection.id === collection_id) setSelectedCollection(undefined)
+
+      localStorage.setItem(
+        LOCAL_STORAGE_COLLECTION_KEY_NAME,
+        JSON.stringify(collectionsWithoutDeletedOne),
+      )
+    },
+    [collections, selectedCollection, setSelectedCollection],
+  )
+
+  useEffect(() => {
+    console.log({ selectedCollection })
+  }, [selectedCollection])
+
   const collectionContextData = useMemo<CollectionContextData>(
     () => ({
       collections,
+      deleteCollection,
       addNewCollection,
       selectCollection,
       selectedCollection,
@@ -140,7 +173,15 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
       deleteTodoFromCollection,
       toggleTodoCompleteFromCollection,
     }),
-    [collections, addNewCollection, selectCollection, selectedCollection, addTodoIntoCollection],
+    [
+      collections,
+      addNewCollection,
+      selectCollection,
+      deleteCollection,
+      selectedCollection,
+      addTodoIntoCollection,
+      setSelectedCollection,
+    ],
   )
 
   useLayoutEffect(() => {

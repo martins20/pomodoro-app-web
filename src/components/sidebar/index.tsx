@@ -9,7 +9,7 @@ import { CreateCollection } from "../forms/create-collection"
 
 export const Sidebar = () => {
   const { toggleModalVisibility, setModalContent } = useModal()
-  const { collections, selectedCollection, selectCollection } = useCollection()
+  const { collections, selectedCollection, selectCollection, deleteCollection } = useCollection()
 
   const handleCreateNewCollection = () => {
     setModalContent(<CreateCollection />)
@@ -26,9 +26,17 @@ export const Sidebar = () => {
           onClick={() => selectCollection(collection.id)}
         >
           {collection.name}
+
+          <div
+            aria-hidden="true"
+            data-testid={`delete-collection_${collection.id}`}
+            onClick={() => deleteCollection(collection.id)}
+          >
+            <Icon type="trash" size={16} />
+          </div>
         </Collection>
       )),
-    [collections, selectedCollection],
+    [collections, selectedCollection, deleteCollection],
   )
 
   return (

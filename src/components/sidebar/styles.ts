@@ -42,6 +42,8 @@ export const Collection = styled.button<CollectionProps>`
   justify-content: flex-start;
   width: 100%;
 
+  gap: 0.5rem;
+
   border: 0;
   background: transparent;
 
@@ -54,6 +56,19 @@ export const Collection = styled.button<CollectionProps>`
 
   &:hover {
     background: var(--color-gray-400);
+  }
+
+  > div {
+    border: 0;
+    line-height: 0;
+    background: transparent;
+    margin: 0;
+
+    :hover {
+      > svg path {
+        color: var(--color-red);
+      }
+    }
   }
 
   ${({ isSelected }) =>
