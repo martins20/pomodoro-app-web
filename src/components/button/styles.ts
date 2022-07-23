@@ -16,7 +16,7 @@ export const Container = styled.button<ContainerProps>`
 
   color: var(--color-white);
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1rem;
 
   text-transform: uppercase;
 
