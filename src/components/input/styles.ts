@@ -27,14 +27,29 @@ export const Input = styled.input<DefaultProps>`
 
   font-size: 1.2rem;
 
-  padding: 0.8rem;
+  padding: 1rem;
 
-  border: 2px solid var(--color-gray-900);
+  border: 2px solid var(--color-white);
+
+  transition: all 0.2s;
+
+  :not(:placeholder-shown) {
+    border-color: var(--color-purple-600);
+  }
+
+  :focus {
+    border-color: var(--color-purple-600);
+  }
 
   ${({ isInvalid }) =>
     isInvalid &&
     css`
       border-color: var(--color-red);
+      color: var(--color-red);
+
+      :focus {
+        border-color: var(--color-red);
+      }
     `};
 `
 
