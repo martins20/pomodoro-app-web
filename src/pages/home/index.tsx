@@ -89,10 +89,6 @@ export const Home = () => {
 
   const shouldDisplayTodoContent = useMemo(() => !!selectedCollection, [selectedCollection])
 
-  // useEffect(() => {
-  //   console.log({ selectedCollection })
-  // }, [selectedCollection])
-
   return (
     <>
       <Container data-testid="home">

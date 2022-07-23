@@ -1,29 +1,49 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
-export const Container = styled.button`
+import { ButtonType } from "."
+
+type ContainerProps = {
+  buttonType: ButtonType
+}
+
+export const Container = styled.button<ContainerProps>`
   display: flex;
   border: none;
 
-  background: transparent;
+  background: var(--color-purple-500);
 
-  padding: 5px 10px;
+  padding: 0.625rem 1rem;
 
-  color: var(--color-purple);
+  color: var(--color-white);
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.5rem;
 
   text-transform: uppercase;
 
-  border: 0.3rem solid var(--color-purple);
-  border-radius: 8px;
+  border-radius: 4px;
 
   transition: all 0.3s;
 
   &:hover {
-    opacity: 0.7;
+    background: var(--color-purple-600);
   }
 
   &:active {
-    opacity: 0.3;
+    background: var(--color-purple-600);
   }
+
+  ${({ buttonType }) =>
+    buttonType === "outline" &&
+    css`
+      background: transparent;
+      border: 0.3rem solid var(--color-white);
+
+      &:hover {
+        border-color: var(--color-purple-600);
+      }
+
+      &:active {
+        border-color: var(--color-purple-600);
+      }
+    `}
 `
