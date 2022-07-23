@@ -211,7 +211,7 @@ describe("Home", () => {
     })
   })
 
-  it("Should dete a todo from tasks section", async () => {
+  it("Should delete a todo from tasks section", async () => {
     sutSpy.selectCollection("Collection One")
 
     const { getByTestId, queryByText } = sut

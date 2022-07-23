@@ -1,21 +1,20 @@
 import { useMemo } from "react"
 
-import { Icon } from "../icon"
-import { useCollection, useModal } from "../../hooks"
+import { useCollection } from "../../hooks"
 
-import { Container, Header, Content, Collection, Footer } from "./styles"
+import { Container, Header, Content, Collection } from "./styles"
 
-import { CreateCollection } from "../forms/create-collection"
+// import { CreateCollection } from "../forms/create-collection"
 
 export const Sidebar = () => {
-  const { toggleModalVisibility, setModalContent } = useModal()
+  // const { toggleModalVisibility, setModalContent } = useModal()
   const { collections, selectedCollection, selectCollection, deleteCollection } = useCollection()
 
-  const handleCreateNewCollection = () => {
-    setModalContent(<CreateCollection />)
+  // const handleCreateNewCollection = () => {
+  //   setModalContent(<CreateCollection />)
 
-    toggleModalVisibility()
-  }
+  //   toggleModalVisibility()
+  // }
 
   const Collections = useMemo(
     () =>
@@ -26,14 +25,6 @@ export const Sidebar = () => {
           onClick={() => selectCollection(collection.id)}
         >
           {collection.name}
-
-          <div
-            aria-hidden="true"
-            data-testid={`delete-collection_${collection.id}`}
-            onClick={() => deleteCollection(collection.id)}
-          >
-            <Icon type="trash" size={16} />
-          </div>
         </Collection>
       )),
     [collections, selectedCollection, deleteCollection],
@@ -42,17 +33,10 @@ export const Sidebar = () => {
   return (
     <Container data-testid="sidebar">
       <Header>
-        <b>Collections</b>
+        <h1>Collections</h1>
       </Header>
 
       <Content>{Collections}</Content>
-
-      <Footer>
-        <button onClick={handleCreateNewCollection}>
-          Add a new collection
-          <Icon type="add" size={16} />
-        </button>
-      </Footer>
     </Container>
   )
 }

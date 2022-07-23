@@ -9,10 +9,11 @@ export const Container = styled.aside`
   flex-direction: column;
   justify-content: space-between;
 
-  min-width: 150px;
+  min-width: 200px;
   background: var(--color-gray-500);
 
   height: 100vh;
+  border: 1px solid var(--color-gray-800);
 `
 export const Header = styled.header`
   display: flex;
@@ -22,15 +23,18 @@ export const Header = styled.header`
 
   padding: 1rem;
 
-  > b {
-    font-size: 0.7rem;
-    color: var(--white);
+  margin-bottom: 1.5rem;
+
+  > h1 {
+    font-size: 1.2rem;
+    color: var(--color-purple-600);
   }
 `
 
 export const Content = styled.section`
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 100%;
 
   overflow-y: auto;
@@ -40,12 +44,11 @@ export const Collection = styled.button<CollectionProps>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
-
-  gap: 0.5rem;
+  width: 90%;
 
   border: 0;
   background: transparent;
+  border-radius: 8px;
 
   padding: 1rem;
 
@@ -58,24 +61,23 @@ export const Collection = styled.button<CollectionProps>`
     background: var(--color-gray-400);
   }
 
-  > div {
-    border: 0;
-    line-height: 0;
-    background: transparent;
-    margin: 0;
-
-    :hover {
-      > svg path {
-        color: var(--color-red);
-      }
-    }
+  &:active {
+    background: var(--color-purple-600);
   }
 
   ${({ isSelected }) =>
     isSelected &&
     css`
-      background: var(--color-gray-400);
+      background: var(--color-purple-600);
+
+      &:hover {
+        background: var(--color-purple-600);
+      }
     `}
+
+  & + button {
+    margin-top: 0.8rem;
+  }
 `
 
 export const Footer = styled.footer`
