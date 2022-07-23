@@ -6,7 +6,7 @@ type ContainerProps = {
   isCompleted: boolean
 }
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.section<ContainerProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,10 +40,8 @@ export const Container = styled.div<ContainerProps>`
     background: transparent;
     margin: 0;
 
-    :hover {
-      > svg path {
-        color: var(--color-red);
-      }
+    > svg path {
+      color: var(--color-red);
     }
   }
 `
@@ -56,13 +54,13 @@ export const Checkbox = styled.input`
 
   font: inherit;
   color: currentColor;
-  width: 1rem;
-  height: 1rem;
+  width: 1.25rem;
+  height: 1.25rem;
 
-  min-width: 1rem;
-  min-height: 1rem;
-  border: 0.1rem solid currentColor;
-  border-radius: 100%;
+  min-width: 1.25rem;
+  min-height: 1.25rem;
+  border: 2px solid var(--color-purple-500);
+  border-radius: 4px;
   transform: translateY(-0.075rem);
 
   display: grid;
@@ -73,45 +71,35 @@ export const Checkbox = styled.input`
 
   :before {
     content: "";
-    width: 0.5rem;
-    height: 0.5rem;
-    transform: scale(0);
-    transition: 0.1s transform ease-in-out;
-    box-shadow: inset 1em 1em var(--color-purple);
+    width: 0.8rem;
+    height: 0.8rem;
 
-    transform-origin: bottom left;
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    background: transparent;
   }
 
   :checked {
-    border-color: var(--color-purple);
+    border-color: var(--color-purple-600);
 
     :before {
-      transform: scale(1);
+      background: var(--color-purple-600);
     }
   }
 
-  :hover {
-    border-color: var(--color-purple);
-  }
-
   :disabled {
-    filter: brightness(0.5);
+    filter: grayscale(1);
     cursor: not-allowed;
   }
 `
 export const TodoName = styled.b`
   width: 100%;
 
-  font-size: 1.2rem;
+  font-size: 1rem;
 
   text-align: justify;
-  line-height: 1.4;
+  line-height: 1.9;
 `
 
 export const TrashIcon = styled(Icon).attrs({
   type: "trash",
-  size: 18,
-})`
-  color: red;
-`
+  size: 20,
+})``

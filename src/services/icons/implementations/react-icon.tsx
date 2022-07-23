@@ -1,6 +1,5 @@
 import { IoClose } from "react-icons/io5"
-import { CgTrashEmpty } from "react-icons/cg"
-import { BiAddToQueue } from "react-icons/bi"
+import { BiTrash, BiAddToQueue } from "react-icons/bi"
 
 import { IconContract, IconName, IconProps } from "../../contracts/icon"
 
@@ -19,7 +18,7 @@ export class ReactIcons implements IconContract {
   setIcon(icon_name: IconName, props?: IconProps): JSX.Element {
     switch (icon_name) {
       case "trash":
-        return <CgTrashEmpty {...props} />
+        return <BiTrash {...props} />
 
       case "add":
         return <BiAddToQueue {...props} />
