@@ -42,11 +42,11 @@ export const Timer: FC<TimerProps> = ({
     getTimerInSeconds(focus_time_in_minutes),
   )
 
-  // TODO: pass timeInSeconds into function param
-  const setCountDownTimer = () =>
-    isFocusMode ? formatTimeNumber(focusTimerInSeconds) : formatTimeNumber(restTimerInSeconds)
+  const setCountDownTimer = (timeInSeconds: number) => formatTimeNumber(timeInSeconds)
 
-  const [timer, setTimer] = useState(setCountDownTimer())
+  const [timer, setTimer] = useState(
+    setCountDownTimer(isFocusMode ? focusTimerInSeconds : restTimerInSeconds),
+  )
 
   const clearCountDownProcess = () => {
     if (countDownId) {
@@ -95,7 +95,7 @@ export const Timer: FC<TimerProps> = ({
 
     if (isSomeCoundDownReachToZero) toggleTimerMode()
 
-    setTimer(setCountDownTimer())
+    setTimer(setCountDownTimer(isFocusMode ? focusTimerInSeconds : restTimerInSeconds))
   }, [focusTimerInSeconds, restTimerInSeconds])
 
   // Kill countDown process when component is unmounted.
@@ -103,8 +103,8 @@ export const Timer: FC<TimerProps> = ({
 
   return (
     <Container>
-      <Label isFocusMode={isFocusMode}>{modeLabelText}</Label>
-      <TimerText isFocusMode={isFocusMode}>{timer}</TimerText>
+      <Label>{modeLabelText}</Label>
+      <TimerText>{timer}</TimerText>
 
       <Button text={buttonText} onClick={toggleCountDownProcess} />
     </Container>

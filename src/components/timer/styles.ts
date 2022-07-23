@@ -1,8 +1,4 @@
-import styled, { css } from "styled-components"
-
-type DefaultProps = {
-  isFocusMode: boolean
-}
+import styled from "styled-components"
 
 export const Container = styled.section`
   display: flex;
@@ -12,26 +8,16 @@ export const Container = styled.section`
   justify-content: center;
 `
 
-export const Label = styled.h1<DefaultProps>`
+export const Label = styled.h1`
   font-size: 3rem;
   font-weight: 700;
 
-  color: var(--color-purple);
-
-  ${({ isFocusMode }) =>
-    !isFocusMode &&
-    css`
-      color: var(--color-green);
-    `}
+  color: var(--color-white);
 `
-export const TimerText = styled.b<DefaultProps>`
+export const TimerText = styled.b`
   font-size: 4rem;
 
-  color: var(--color-purple);
+  color: var(--color-white);
 
-  ${({ isFocusMode }) =>
-    !isFocusMode &&
-    css`
-      color: var(--color-green);
-    `}
+  margin-bottom: 1rem;
 `
