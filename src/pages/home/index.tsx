@@ -1,13 +1,15 @@
 import { ChangeEvent, useState, useMemo, useCallback, useEffect } from "react"
 
-import { Input, Sidebar, Timer, Todo } from "../../components"
+import { Icon, Input, Sidebar, Timer, Todo } from "../../components"
+import { Collection } from "../../components/sidebar/styles"
 
 import { useCollection } from "../../hooks"
 
-import { Container, Content, TaskList } from "./styles"
+import { CollectionInfo, Container, Content, TaskList } from "./styles"
 
 export const Home = () => {
   const {
+    deleteCollection,
     selectedCollection,
     addTodoIntoCollection,
     deleteTodoFromCollection,
@@ -40,19 +42,10 @@ export const Home = () => {
     handleAddTodo()
   }, [getIsInputValid])
 
-  const inCommingTodos = useMemo(
-    () => selectedCollection?.todos.filter((todo) => !todo.isCompleted) || [],
-    [selectedCollection],
-  )
-  const completedTodos = useMemo(
-    () => selectedCollection?.todos.filter((todo) => todo.isCompleted) || [],
-    [selectedCollection],
-  )
-
-  const IncommingTodos = useMemo(
+  const Todos = useMemo(
     () => (
       <section>
-        {inCommingTodos.map((todo) => (
+        {selectedCollection?.todos.map((todo) => (
           <Todo
             id={todo.id}
             key={todo.id}
@@ -65,26 +58,7 @@ export const Home = () => {
         ))}
       </section>
     ),
-    [inCommingTodos, selectedCollection],
-  )
-
-  const CompletedTodos = useMemo(
-    () => (
-      <section>
-        {completedTodos.map((todo) => (
-          <Todo
-            id={todo.id}
-            key={todo.id}
-            name={todo.name}
-            data-test-id={todo.name}
-            onDelete={() => deleteTodoFromCollection(todo.id)}
-            onCheck={() => toggleTodoCompleteFromCollection(todo.id)}
-            isCompleted={todo.isCompleted}
-          />
-        ))}
-      </section>
-    ),
-    [completedTodos, selectedCollection],
+    [selectedCollection],
   )
 
   const shouldDisplayTodoContent = useMemo(() => !!selectedCollection, [selectedCollection])
@@ -99,35 +73,46 @@ export const Home = () => {
         {shouldDisplayTodoContent && (
           <Content>
             <header>
-              <Input
-                value={todoText}
-                onChange={handleChangeTodoText}
-                onInputSubmit={handleAddTodo}
-                isValueValid={isInputValid}
-                placeholder="Add a task here"
-                validation={{
-                  message: "Todo name is required",
-                  getInputValidation: getIsInputValid,
-                }}
-              />
+              <CollectionInfo>
+                <h1>{selectedCollection?.name}</h1>
 
-              <button onClick={handleAddTodoByButton}>Add</button>
+                <button onClick={() => deleteCollection(selectedCollection!.id)}>
+                  <Icon type="trash" size={25} />
+                </button>
+              </CollectionInfo>
+
+              <section>
+                <Input
+                  value={todoText}
+                  onChange={handleChangeTodoText}
+                  onInputSubmit={handleAddTodo}
+                  isValueValid={isInputValid}
+                  placeholder="Add a task here"
+                  validation={{
+                    message: "Todo name is required",
+                    getInputValidation: getIsInputValid,
+                  }}
+                />
+
+                {/* <button onClick={handleAddTodoByButton}>Add</button> */}
+              </section>
             </header>
 
-            <TaskList hasCompletedTodo={!!completedTodos.length}>
-              <div>
-                <h3>Tasks - {inCommingTodos.length}</h3>
+            <TaskList>
+              <header>
+                <h3>
+                  Todos <b>{selectedCollection?.todos.length}</b>
+                </h3>
+                <h3>
+                  Completed
+                  <b>
+                    {selectedCollection?.todos.filter((todo) => todo.isCompleted).length} -{" "}
+                    {selectedCollection?.todos.length}
+                  </b>
+                </h3>
+              </header>
 
-                {IncommingTodos}
-              </div>
-
-              {!!completedTodos.length && (
-                <div>
-                  <h3>Completed - {completedTodos.length} </h3>
-
-                  {CompletedTodos}
-                </div>
-              )}
+              <div>{Todos}</div>
             </TaskList>
           </Content>
         )}

@@ -25,7 +25,7 @@ export const Input = styled.input<DefaultProps>`
   border-radius: 5px;
   background: transparent;
 
-  font-size: 1.2rem;
+  font-size: 1rem;
 
   padding: 1rem;
 

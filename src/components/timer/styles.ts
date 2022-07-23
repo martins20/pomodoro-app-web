@@ -9,7 +9,7 @@ export const Container = styled.section`
 `
 
 export const Label = styled.h1`
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: 700;
 
   color: var(--color-white);

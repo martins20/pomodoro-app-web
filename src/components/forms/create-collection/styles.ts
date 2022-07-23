@@ -26,7 +26,7 @@ export const Container = styled.section`
 
       padding: 0.7rem;
 
-      font-size: 1.2rem;
+      font-size: 1rem;
       border-radius: 8px;
 
       transition: background, border-color 0.25s;
