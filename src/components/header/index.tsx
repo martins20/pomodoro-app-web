@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 import { Button } from "../button"
 import { Profile } from "../profile"
 import { CreateCollection } from "../forms/create-collection"
@@ -17,11 +19,11 @@ export const Header = () => {
 
   return (
     <Container>
-      <a href="/">
+      <Link to="/">
         <h1>
           Pomodoro <b>App</b>
         </h1>
-      </a>
+      </Link>
 
       <nav>
         <Button text="New Collection" onClick={handleCreateNewCollection} />

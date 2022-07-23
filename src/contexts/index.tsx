@@ -6,9 +6,6 @@ import { Header } from "../components"
 
 export const AppProvider: FC<PropsWithChildren> = ({ children }) => (
   <CollectionProvider>
-    <ModalProvider>
-      <Header />
-      {children}
-    </ModalProvider>
+    <ModalProvider>{children}</ModalProvider>
   </CollectionProvider>
 )

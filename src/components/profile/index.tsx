@@ -9,7 +9,7 @@ export type ProfileProps = {
 }
 
 export const Profile: FC<ProfileProps> = ({ source, type = "small" }) => (
-  <Container type={type} href="profile">
+  <Container type={type} to="/profile">
     <img src={source} alt="Profile" />
   </Container>
 )

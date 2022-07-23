@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 import { ProfileType } from "."
@@ -6,7 +7,7 @@ type ContainerProps = {
   type: ProfileType
 }
 
-export const Container = styled.a<ContainerProps>`
+export const Container = styled(Link)<ContainerProps>`
   > img {
     width: 60px;
     height: 60px;
