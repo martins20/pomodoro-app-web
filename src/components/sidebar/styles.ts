@@ -7,12 +7,11 @@ type CollectionProps = {
 export const Container = styled.aside`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
   min-width: 200px;
   background: var(--color-gray-500);
 
-  height: 100vh;
+  height: 100%;
   border: 1px solid var(--color-gray-800);
 `
 export const Header = styled.header`

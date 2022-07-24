@@ -12,6 +12,12 @@ const mockCollections: CollectionDTO[] = [
     name: "First collection",
     createdAt: new Date(),
   },
+  {
+    id: "collection-two",
+    todos: [],
+    name: "Second collection",
+    createdAt: new Date(),
+  },
 ]
 let mockSelectedCollection: CollectionDTO | undefined
 const mockSelectCollection = jest.fn().mockImplementation((collection_id: string) => {
@@ -48,32 +54,13 @@ describe("Sidebar", () => {
     expect(sideBarElement).toBeInTheDocument()
   })
 
-  it("Should add a new collection when user clicks on 'Add a new collection'", () => {
+  it("Should select a collection when user clicks into some collection", () => {
     const { getByText } = sut
 
-    const addNewCollectionButtonElement = getByText("Add a new collection")
-
-    fireEvent.click(addNewCollectionButtonElement)
-
-    expect(mockToggleModalVisibility).toHaveBeenCalledTimes(1)
-  })
-
-  it("Should select a collection whe user clicks into some collection", () => {
-    const { getByText } = sut
-
-    const firstCollectionElement = getByText("First collection")
+    const firstCollectionElement = getByText("Second collection")
 
     fireEvent.click(firstCollectionElement)
 
-    expect(mockSelectCollection).toHaveBeenCalledWith("collection-one")
-  })
-
-  it("Should delete a collection by clicking into tash button icon", () => {
-    const { getByTestId } = sut
-
-    const deleteCollectionButtonElement = getByTestId(`delete-collection_${mockCollections[0].id}`)
-    fireEvent.click(deleteCollectionButtonElement)
-
-    expect(mockDeleteCollection).toHaveBeenLastCalledWith(mockCollections[0].id)
+    expect(mockSelectCollection).toHaveBeenCalledWith("collection-two")
   })
 })

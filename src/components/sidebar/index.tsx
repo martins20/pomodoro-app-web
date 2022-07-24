@@ -4,17 +4,8 @@ import { useCollection } from "../../hooks"
 
 import { Container, Header, Content, Collection } from "./styles"
 
-// import { CreateCollection } from "../forms/create-collection"
-
 export const Sidebar = () => {
-  // const { toggleModalVisibility, setModalContent } = useModal()
   const { collections, selectedCollection, selectCollection, deleteCollection } = useCollection()
-
-  // const handleCreateNewCollection = () => {
-  //   setModalContent(<CreateCollection />)
-
-  //   toggleModalVisibility()
-  // }
 
   const Collections = useMemo(
     () =>

@@ -26,7 +26,11 @@ export const Header = () => {
       </Link>
 
       <nav>
-        <Button text="New Collection" onClick={handleCreateNewCollection} />
+        <Button
+          text="New Collection"
+          onClick={handleCreateNewCollection}
+          data-testid="create-collection"
+        />
         <Profile source="https://www.github.com/martins20.png" />
       </nav>
     </Container>

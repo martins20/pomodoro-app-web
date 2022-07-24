@@ -9,10 +9,10 @@ type ContainerProps = {
 
 export const Container = styled(Link)<ContainerProps>`
   > img {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 
     border-radius: 50%;
-    border: 2px solid var(--color-purple-500);
+    border: 1.5px solid var(--color-purple-500);
   }
 `

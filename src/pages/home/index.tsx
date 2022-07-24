@@ -1,7 +1,6 @@
-import { ChangeEvent, useState, useMemo, useCallback, useEffect } from "react"
+import { ChangeEvent, useState, useMemo, useCallback } from "react"
 
 import { Icon, Input, Sidebar, Timer, Todo } from "../../components"
-import { Collection } from "../../components/sidebar/styles"
 
 import { useCollection } from "../../hooks"
 
@@ -94,7 +93,7 @@ export const Home = () => {
                   }}
                 />
 
-                {/* <button onClick={handleAddTodoByButton}>Add</button> */}
+                <button onClick={handleAddTodoByButton}>Add</button>
               </section>
             </header>
 
@@ -106,8 +105,9 @@ export const Home = () => {
                 <h3>
                   Completed
                   <b>
-                    {selectedCollection?.todos.filter((todo) => todo.isCompleted).length} -{" "}
-                    {selectedCollection?.todos.length}
+                    {`${selectedCollection?.todos.filter((todo) => todo.isCompleted).length} - ${
+                      selectedCollection?.todos.length
+                    }`}
                   </b>
                 </h3>
               </header>
