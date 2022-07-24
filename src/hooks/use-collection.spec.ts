@@ -117,12 +117,19 @@ describe("useCollection", () => {
       result.current.deleteCollection(result.current.collections[0].id)
     })
 
-
     expect(result.current.collections).toHaveLength(0)
     expect(result.current.selectedCollection).toBeFalsy()
     expect(localStorageSetItemSpy).toHaveBeenCalledWith(
       LOCAL_STORAGE_COLLECTION_KEY_NAME,
       JSON.stringify(result.current.collections),
+    )
+  })
+
+  it("Should not be able to select a non existent collection", async () => {
+    const { result } = await makeSut()
+
+    await expect(result.current.selectCollection("non-existent-collection-id")).rejects.toThrow(
+      "Cannot select a non-existent collection",
     )
   })
 })

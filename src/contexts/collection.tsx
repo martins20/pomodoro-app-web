@@ -18,7 +18,7 @@ export type CollectionContextData = {
   addNewCollection: (data: CreateCollectionDTO) => void
   deleteTodoFromCollection: (todo_id: TodoDTO["id"]) => void
   deleteCollection: (collection_id: CollectionDTO["id"]) => Promise<void>
-  selectCollection: (collection_id: CollectionDTO["id"]) => void
+  selectCollection: (collection_id: CollectionDTO["id"]) => Promise<void>
   toggleTodoCompleteFromCollection: (todo_id: TodoDTO["id"]) => void
 }
 
@@ -121,10 +121,10 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 
   const selectCollection = useCallback(
-    (collection_id: CollectionDTO["id"]) => {
+    async (collection_id: CollectionDTO["id"]) => {
       const foundCollectionById = collections.find((collection) => collection.id === collection_id)
 
-      if (!foundCollectionById) throw new Error("Cannot select a non-existent collention")
+      if (!foundCollectionById) throw new Error("Cannot select a non-existent collection")
 
       setSelectedCollection(foundCollectionById)
     },
