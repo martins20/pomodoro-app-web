@@ -129,6 +129,14 @@ describe("useCollection", () => {
     )
   })
 
+  it("Should not be able to unselect a collection without a selected one", async () => {
+    const { result } = await makeSut()
+
+    expect(result.current.unSelectCollection()).rejects.toThrow(
+      "Cannot unselect a collection without a selected one",
+    )
+  })
+
   it("Should select a collection", async () => {
     const { result } = await makeSut()
 
