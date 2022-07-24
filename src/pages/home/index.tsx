@@ -41,10 +41,25 @@ export const Home = () => {
     handleAddTodo()
   }, [getIsInputValid])
 
+  const unCompletedTodos = useMemo(
+    () => selectedCollection?.todos.filter((todo) => !todo.isCompleted) || [],
+    [selectedCollection],
+  )
+
+  const completedTodos = useMemo(
+    () => selectedCollection?.todos.filter((todo) => todo.isCompleted) || [],
+    [selectedCollection],
+  )
+
+  const collectionTodos = useMemo(
+    () => [...unCompletedTodos, ...completedTodos],
+    [unCompletedTodos, completedTodos],
+  )
+
   const Todos = useMemo(
     () => (
       <section>
-        {selectedCollection?.todos.map((todo) => (
+        {collectionTodos.map((todo) => (
           <Todo
             id={todo.id}
             key={todo.id}
@@ -100,15 +115,11 @@ export const Home = () => {
             <TaskList>
               <header>
                 <h3>
-                  Todos <b>{selectedCollection?.todos.length}</b>
+                  Todos <b>{collectionTodos.length}</b>
                 </h3>
                 <h3>
                   Completed
-                  <b>
-                    {`${selectedCollection?.todos.filter((todo) => todo.isCompleted).length} - ${
-                      selectedCollection?.todos.length
-                    }`}
-                  </b>
+                  <b>{`${completedTodos.length} - ${collectionTodos.length}`}</b>
                 </h3>
               </header>
 
