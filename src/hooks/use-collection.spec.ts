@@ -27,10 +27,6 @@ const localStorageSetItemSpy = jest.spyOn(Storage.prototype, "setItem")
 const dateNowSpy = jest.spyOn(Date, "now")
 
 describe("useCollection", () => {
-  // afterEach(() => {
-  //   cleanup()
-  // })
-
   it("Should call local storage for search a storaged collection", async () => {
     const { result } = await makeSut()
 
@@ -131,5 +127,24 @@ describe("useCollection", () => {
     await expect(result.current.selectCollection("non-existent-collection-id")).rejects.toThrow(
       "Cannot select a non-existent collection",
     )
+  })
+
+  it("Should select a collection", async () => {
+    const { result } = await makeSut()
+
+    await act(async () => {
+      result.current.addNewCollection({ name: "Collection One" })
+    })
+
+    await act(async () => {
+      result.current.addNewCollection({ name: "Collection Two" })
+    })
+
+    await act(async () => {
+      await result.current.selectCollection(result.current.collections[0].id)
+    })
+
+    expect(result.current.selectedCollection).toBeTruthy()
+    expect(result.current.selectedCollection?.name).toBe("Collection One")
   })
 })
