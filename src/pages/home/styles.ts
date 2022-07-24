@@ -24,6 +24,8 @@ export const Content = styled.section`
   padding: 1rem;
   height: 100%;
 
+  margin-top: 1.5rem;
+
   > header {
     display: flex;
     flex-direction: column;

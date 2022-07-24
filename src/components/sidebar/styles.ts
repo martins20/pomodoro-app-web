@@ -9,6 +9,11 @@ export const Container = styled.aside`
   flex-direction: column;
 
   min-width: 200px;
+  max-width: 400px;
+
+  /* width: 100%; */
+
+  flex: 1;
   background: var(--color-gray-500);
 
   height: 100%;
