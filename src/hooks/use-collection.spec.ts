@@ -78,7 +78,7 @@ describe("useCollection", () => {
     )
   })
 
-  it("Should delete an existent collection", async () => {
+  it("Should delete the selected collection", async () => {
     const collectionID = 1
 
     const { result } = await makeSut()
@@ -107,6 +107,22 @@ describe("useCollection", () => {
 
     await expect(result.current.deleteCollection("non-existent-collection-id")).rejects.toThrow(
       "Cannot delete a non-existent collection",
+    )
+  })
+
+  it("Should delete a collection", async () => {
+    const { result } = await makeSut()
+
+    await act(async () => {
+      result.current.deleteCollection(result.current.collections[0].id)
+    })
+
+
+    expect(result.current.collections).toHaveLength(0)
+    expect(result.current.selectedCollection).toBeFalsy()
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(
+      LOCAL_STORAGE_COLLECTION_KEY_NAME,
+      JSON.stringify(result.current.collections),
     )
   })
 })

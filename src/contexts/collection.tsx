@@ -143,14 +143,14 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
 
       setCollections(collectionsWithoutDeletedOne)
 
-      if (!selectedCollection) return
-
-      if (selectedCollection.id === collection_id) setSelectedCollection(undefined)
-
       localStorage.setItem(
         LOCAL_STORAGE_COLLECTION_KEY_NAME,
         JSON.stringify(collectionsWithoutDeletedOne),
       )
+
+      if (!selectedCollection) return
+
+      if (selectedCollection.id === collection_id) setSelectedCollection(undefined)
     },
     [collections, selectedCollection, setSelectedCollection],
   )
