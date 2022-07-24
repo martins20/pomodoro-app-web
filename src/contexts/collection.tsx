@@ -133,6 +133,8 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const deleteCollection = useCallback(
     (collection_id: CollectionDTO["id"]): void => {
+      console.log({ collection_id })
+
       const foundCollection = collections.find((collection) => collection.id === collection_id)
 
       if (!foundCollection) throw new Error("Cannot delete a non-existent collection")

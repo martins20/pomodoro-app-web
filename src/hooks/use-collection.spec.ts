@@ -1,4 +1,4 @@
-import { renderHook, RenderHookResult, act } from "@testing-library/react"
+import { renderHook, RenderHookResult, act, waitFor, cleanup } from "@testing-library/react"
 import { LOCAL_STORAGE_COLLECTION_KEY_NAME } from "../constants"
 
 import { CollectionContextData, CollectionProvider } from "../contexts/collection"
@@ -8,6 +8,8 @@ import { useCollection as useSut } from "./use-collection"
 type SutResponse = RenderHookResult<CollectionContextData, object>
 
 const makeSut = async () => {
+  cleanup()
+
   let sut: SutResponse = {} as SutResponse
 
   await act(async () => {
@@ -22,7 +24,13 @@ const makeSut = async () => {
 const localStorageGetItemSpy = jest.spyOn(Storage.prototype, "getItem")
 const localStorageSetItemSpy = jest.spyOn(Storage.prototype, "setItem")
 
+const dateNowSpy = jest.spyOn(Date, "now")
+
 describe("useCollection", () => {
+  // afterEach(() => {
+  //   cleanup()
+  // })
+
   it("Should call local storage for search a storaged collection", async () => {
     const { result } = await makeSut()
 
@@ -64,6 +72,30 @@ describe("useCollection", () => {
     expect(result.current.selectedCollection).toBeTruthy()
     expect(result.current.selectedCollection?.name).toBe(collectionName)
 
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(
+      LOCAL_STORAGE_COLLECTION_KEY_NAME,
+      JSON.stringify(result.current.collections),
+    )
+  })
+
+  it("Should delete an existent collection", async () => {
+    const collectionID = 1
+
+    const { result } = await makeSut()
+
+    const collectionName = "Jonh Collection Two"
+    dateNowSpy.mockReturnValueOnce(collectionID)
+
+    await act(async () => {
+      result.current.addNewCollection({ name: collectionName })
+    })
+
+    await act(async () => {
+      result.current.deleteCollection(collectionID.toString())
+    })
+
+    expect(result.current.collections).toHaveLength(1)
+    expect(result.current.selectedCollection).toBeFalsy()
     expect(localStorageSetItemSpy).toHaveBeenCalledWith(
       LOCAL_STORAGE_COLLECTION_KEY_NAME,
       JSON.stringify(result.current.collections),
