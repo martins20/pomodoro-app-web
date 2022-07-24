@@ -90,7 +90,11 @@ export const Home = () => {
               <CollectionInfo>
                 <h1>{selectedCollection?.name}</h1>
 
-                <button onClick={() => deleteCollection(selectedCollection!.id)}>
+                <button
+                  onClick={async () => {
+                    await deleteCollection(selectedCollection!.id)
+                  }}
+                >
                   <Icon type="trash" size={25} />
                 </button>
               </CollectionInfo>

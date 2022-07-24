@@ -17,7 +17,7 @@ export type CollectionContextData = {
   addTodoIntoCollection: (todo: CreateTodoDTO) => void
   addNewCollection: (data: CreateCollectionDTO) => void
   deleteTodoFromCollection: (todo_id: TodoDTO["id"]) => void
-  deleteCollection: (collection_id: CollectionDTO["id"]) => void
+  deleteCollection: (collection_id: CollectionDTO["id"]) => Promise<void>
   selectCollection: (collection_id: CollectionDTO["id"]) => void
   toggleTodoCompleteFromCollection: (todo_id: TodoDTO["id"]) => void
 }
@@ -132,9 +132,7 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 
   const deleteCollection = useCallback(
-    (collection_id: CollectionDTO["id"]): void => {
-      console.log({ collection_id })
-
+    async (collection_id: CollectionDTO["id"]): Promise<void> => {
       const foundCollection = collections.find((collection) => collection.id === collection_id)
 
       if (!foundCollection) throw new Error("Cannot delete a non-existent collection")

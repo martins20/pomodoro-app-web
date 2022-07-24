@@ -91,7 +91,7 @@ describe("useCollection", () => {
     })
 
     await act(async () => {
-      result.current.deleteCollection(collectionID.toString())
+      await result.current.deleteCollection(collectionID.toString())
     })
 
     expect(result.current.collections).toHaveLength(1)
@@ -99,6 +99,14 @@ describe("useCollection", () => {
     expect(localStorageSetItemSpy).toHaveBeenCalledWith(
       LOCAL_STORAGE_COLLECTION_KEY_NAME,
       JSON.stringify(result.current.collections),
+    )
+  })
+
+  it("Should not be able to delete non existent collection", async () => {
+    const { result } = await makeSut()
+
+    await expect(result.current.deleteCollection("non-existent-collection-id")).rejects.toThrow(
+      "Cannot delete a non-existent collection",
     )
   })
 })
