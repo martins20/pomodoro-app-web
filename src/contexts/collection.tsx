@@ -6,7 +6,6 @@ import {
   useMemo,
   useState,
   useLayoutEffect,
-  useEffect,
 } from "react"
 import { LOCAL_STORAGE_COLLECTION_KEY_NAME } from "../constants"
 
@@ -146,8 +145,6 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
 
       if (!selectedCollection) return
 
-      console.log(selectedCollection.id === collection_id)
-
       if (selectedCollection.id === collection_id) setSelectedCollection(undefined)
 
       localStorage.setItem(
@@ -157,10 +154,6 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
     },
     [collections, selectedCollection, setSelectedCollection],
   )
-
-  useEffect(() => {
-    console.log({ selectedCollection })
-  }, [selectedCollection])
 
   const collectionContextData = useMemo<CollectionContextData>(
     () => ({
