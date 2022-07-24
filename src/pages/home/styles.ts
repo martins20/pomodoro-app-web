@@ -85,10 +85,6 @@ export const TaskList = styled.article`
 
   margin: 1rem 0;
 
-  height: 100vh;
-
-  overflow: auto;
-
   > header {
     display: flex;
     align-items: center;
@@ -96,7 +92,7 @@ export const TaskList = styled.article`
 
     gap: 0.5rem;
 
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
 
     > h3 {
       display: flex;
@@ -124,6 +120,10 @@ export const TaskList = styled.article`
 
   > div {
     padding-right: 0.5rem;
+
+    height: 65vh;
+
+    overflow: auto;
 
     > section {
       overflow-y: auto;
