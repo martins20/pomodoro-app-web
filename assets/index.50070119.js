@@ -243,6 +243,11 @@ Error generating stack: `+l.message+`
   flex-direction: column;
 
   min-width: 200px;
+  max-width: 400px;
+
+  /* width: 100%; */
+
+  flex: 1;
   background: var(--color-gray-500);
 
   height: 100%;
@@ -500,6 +505,8 @@ Error generating stack: `+l.message+`
 
   padding: 1rem;
   height: 100%;
+
+  margin-top: 1.5rem;
 
   > header {
     display: flex;
