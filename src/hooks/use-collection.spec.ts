@@ -20,6 +20,7 @@ const makeSut = async () => {
 }
 
 const localStorageGetItemSpy = jest.spyOn(Storage.prototype, "getItem")
+const localStorageSetItemSpy = jest.spyOn(Storage.prototype, "setItem")
 
 describe("useCollection", () => {
   it("Should call local storage for search a storaged collection", async () => {
@@ -42,5 +43,30 @@ describe("useCollection", () => {
 
     expect(result.current.collections[0]).toEqual(expect.objectContaining(mockCollection))
     expect(localStorageGetItemSpy).toHaveBeenCalledWith(LOCAL_STORAGE_COLLECTION_KEY_NAME)
+  })
+
+  it("Should create a new collection", async () => {
+    const { result } = await makeSut()
+
+    const collectionName = "Jonh Collection"
+
+    await act(async () => {
+      result.current.addNewCollection({ name: collectionName })
+    })
+
+    expect(result.current.collections[0]).toEqual(
+      expect.objectContaining({
+        name: collectionName,
+        todos: [],
+      }),
+    )
+
+    expect(result.current.selectedCollection).toBeTruthy()
+    expect(result.current.selectedCollection?.name).toBe(collectionName)
+
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(
+      LOCAL_STORAGE_COLLECTION_KEY_NAME,
+      JSON.stringify(result.current.collections),
+    )
   })
 })
