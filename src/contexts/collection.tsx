@@ -15,7 +15,7 @@ export type CollectionContextData = {
   collections: CollectionDTO[]
   selectedCollection?: CollectionDTO
   unSelectCollection: () => Promise<void>
-  addTodoIntoCollection: (todo: CreateTodoDTO) => void
+  addTodoIntoCollection: (todo: CreateTodoDTO) => Promise<void>
   addNewCollection: (data: CreateCollectionDTO) => void
   deleteTodoFromCollection: (todo_id: TodoDTO["id"]) => void
   toggleTodoCompleteFromCollection: (todo_id: TodoDTO["id"]) => void
@@ -51,7 +51,7 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 
   const addTodoIntoCollection = useCallback(
-    (todo: CreateTodoDTO): void => {
+    async (todo: CreateTodoDTO): Promise<void> => {
       if (!selectedCollection) throw new Error("Cannot add a todo without an collection")
 
       const updatedColectionWithNewTodo = {
@@ -134,7 +134,7 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const unSelectCollection = useCallback(async () => {
     if (!selectedCollection) throw new Error("Cannot unselect a collection without a selected one")
-    
+
     setSelectedCollection(undefined)
   }, [selectedCollection])
 

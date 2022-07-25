@@ -169,4 +169,12 @@ describe("useCollection", () => {
 
     expect(result.current.selectedCollection).toBeFalsy()
   })
+
+  it("Should not add a todo without a seleted collection", async () => {
+    const { result } = await makeSut()
+
+    expect(result.current.addTodoIntoCollection({ name: "Some TODO" })).rejects.toThrow(
+      "Cannot add a todo without an collection",
+    )
+  })
 })
