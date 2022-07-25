@@ -177,4 +177,29 @@ describe("useCollection", () => {
       "Cannot add a todo without an collection",
     )
   })
+
+  it("Should create a new TODO into selected collection", async () => {
+    const { result } = await makeSut()
+
+    const todoName = "A simple TODO"
+
+    await act(async () => {
+      await result.current.selectCollection(result.current.collections[0].id)
+    })
+
+    await act(async () => {
+      await result.current.addTodoIntoCollection({ name: todoName })
+    })
+
+    expect(result.current.selectedCollection?.todos[0]).toEqual(
+      expect.objectContaining({
+        name: todoName,
+        isCompleted: false,
+      }),
+    )
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(
+      LOCAL_STORAGE_COLLECTION_KEY_NAME,
+      JSON.stringify(result.current.collections),
+    )
+  })
 })

@@ -1,5 +1,5 @@
 import { IoClose } from "react-icons/io5"
-import { BiTrash, BiAddToQueue } from "react-icons/bi"
+import { BiTrash } from "react-icons/bi"
 
 import { IconContract, IconName, IconProps } from "../../contracts/icon"
 
@@ -19,9 +19,6 @@ export class ReactIcons implements IconContract {
     switch (icon_name) {
       case "trash":
         return <BiTrash {...props} />
-
-      case "add":
-        return <BiAddToQueue {...props} />
 
       case "close":
         return <IoClose {...props} />
