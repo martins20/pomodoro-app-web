@@ -254,11 +254,29 @@ describe("useCollection", () => {
     )
   })
 
-  it("Should not be able to complete a todo without a selected collection", async () => {
+  it("Should not be able to delete a todo without a selected collection", async () => {
     const { result } = await makeSut()
 
     expect(result.current.deleteTodoFromCollection("1")).rejects.toThrow(
       "Cannot delete a todo without a selected collection",
+    )
+  })
+
+  it("Should delete a todo from selected collection", async () => {
+    const { result } = await makeSut()
+
+    await act(async () => {
+      await result.current.selectCollection(result.current.collections[0].id)
+    })
+
+    await act(async () => {
+      await result.current.deleteTodoFromCollection("1")
+    })
+
+    expect(result.current.selectedCollection?.todos).toHaveLength(0)
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(
+      LOCAL_STORAGE_COLLECTION_KEY_NAME,
+      JSON.stringify(result.current.collections),
     )
   })
 })
