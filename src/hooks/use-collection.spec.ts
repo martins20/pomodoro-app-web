@@ -253,4 +253,12 @@ describe("useCollection", () => {
       }),
     )
   })
+
+  it("Should not be able to complete a todo without a selected collection", async () => {
+    const { result } = await makeSut()
+
+    expect(result.current.deleteTodoFromCollection("1")).rejects.toThrow(
+      "Cannot delete a todo without a selected collection",
+    )
+  })
 })
