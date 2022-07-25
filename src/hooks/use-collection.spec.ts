@@ -235,4 +235,22 @@ describe("useCollection", () => {
       JSON.stringify(result.current.collections),
     )
   })
+
+  it("Should not complete any todo if todo_id was not found", async () => {
+    const { result } = await makeSut()
+
+    await act(async () => {
+      await result.current.selectCollection(result.current.collections[0].id)
+    })
+
+    await act(async () => {
+      await result.current.toggleTodoCompleteFromCollection("non-existent-todo-id")
+    })
+
+    expect(result.current.selectedCollection?.todos[0]).toEqual(
+      expect.objectContaining({
+        isCompleted: true,
+      }),
+    )
+  })
 })
