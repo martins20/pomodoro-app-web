@@ -213,4 +213,26 @@ describe("useCollection", () => {
       "Cannot toggle todo complete without a selected collection",
     )
   })
+
+  it("Should complete a todo from selected collection", async () => {
+    const { result } = await makeSut()
+
+    await act(async () => {
+      await result.current.selectCollection(result.current.collections[0].id)
+    })
+
+    await act(async () => {
+      await result.current.toggleTodoCompleteFromCollection("1")
+    })
+
+    expect(result.current.selectedCollection?.todos[0]).toEqual(
+      expect.objectContaining({
+        isCompleted: true,
+      }),
+    )
+    expect(localStorageSetItemSpy).toHaveBeenCalledWith(
+      LOCAL_STORAGE_COLLECTION_KEY_NAME,
+      JSON.stringify(result.current.collections),
+    )
+  })
 })
