@@ -133,7 +133,9 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 
   const unSelectCollection = useCallback(async () => {
-    throw new Error("Cannot unselect a collection without a selected one")
+    if (!selectedCollection) throw new Error("Cannot unselect a collection without a selected one")
+    
+    setSelectedCollection(undefined)
   }, [selectedCollection])
 
   const deleteCollection = useCallback(

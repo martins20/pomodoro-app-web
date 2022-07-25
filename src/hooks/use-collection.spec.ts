@@ -155,4 +155,18 @@ describe("useCollection", () => {
     expect(result.current.selectedCollection).toBeTruthy()
     expect(result.current.selectedCollection?.name).toBe("Collection One")
   })
+
+  it("Should unselect a selected collection", async () => {
+    const { result } = await makeSut()
+
+    await act(async () => {
+      await result.current.selectCollection(result.current.collections[0].id)
+    })
+
+    await act(async () => {
+      await result.current.unSelectCollection()
+    })
+
+    expect(result.current.selectedCollection).toBeFalsy()
+  })
 })
