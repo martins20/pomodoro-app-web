@@ -18,9 +18,9 @@ export type CollectionContextData = {
   addTodoIntoCollection: (todo: CreateTodoDTO) => Promise<void>
   addNewCollection: (data: CreateCollectionDTO) => void
   deleteTodoFromCollection: (todo_id: TodoDTO["id"]) => void
-  toggleTodoCompleteFromCollection: (todo_id: TodoDTO["id"]) => void
   deleteCollection: (collection_id: CollectionDTO["id"]) => Promise<void>
   selectCollection: (collection_id: CollectionDTO["id"]) => Promise<void>
+  toggleTodoCompleteFromCollection: (todo_id: TodoDTO["id"]) => Promise<void>
 }
 
 export const CollectionContext = createContext<CollectionContextData>({} as CollectionContextData)
@@ -52,7 +52,7 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const addTodoIntoCollection = useCallback(
     async (todo: CreateTodoDTO): Promise<void> => {
-      if (!selectedCollection) throw new Error("Cannot add a todo without an collection")
+      if (!selectedCollection) throw new Error("Cannot add a todo without a selected collection")
 
       const updatedColectionWithNewTodo = {
         ...selectedCollection,
@@ -98,8 +98,8 @@ export const CollectionProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 
   const toggleTodoCompleteFromCollection = useCallback(
-    (todo_id: TodoDTO["id"]): void => {
-      if (!selectedCollection) throw new Error("Cannot add a todo without an collection")
+    async (todo_id: TodoDTO["id"]): Promise<void> => {
+      if (!selectedCollection) throw new Error("Cannot toggle todo complete without a selected collection")
 
       const updatedColectionWithNewTodo = {
         ...selectedCollection,

@@ -1,4 +1,4 @@
-import { renderHook, RenderHookResult, act, waitFor, cleanup } from "@testing-library/react"
+import { renderHook, RenderHookResult, act, cleanup } from "@testing-library/react"
 import { LOCAL_STORAGE_COLLECTION_KEY_NAME } from "../constants"
 
 import { CollectionContextData, CollectionProvider } from "../contexts/collection"
@@ -174,18 +174,21 @@ describe("useCollection", () => {
     const { result } = await makeSut()
 
     expect(result.current.addTodoIntoCollection({ name: "Some TODO" })).rejects.toThrow(
-      "Cannot add a todo without an collection",
+      "Cannot add a todo without a selected collection",
     )
   })
 
   it("Should create a new TODO into selected collection", async () => {
     const { result } = await makeSut()
 
+    const todoId = 1
     const todoName = "A simple TODO"
 
     await act(async () => {
       await result.current.selectCollection(result.current.collections[0].id)
     })
+
+    dateNowSpy.mockReturnValueOnce(todoId)
 
     await act(async () => {
       await result.current.addTodoIntoCollection({ name: todoName })
@@ -200,6 +203,14 @@ describe("useCollection", () => {
     expect(localStorageSetItemSpy).toHaveBeenCalledWith(
       LOCAL_STORAGE_COLLECTION_KEY_NAME,
       JSON.stringify(result.current.collections),
+    )
+  })
+
+  it("Should not be able to complete a todo without a selected collection", async () => {
+    const { result } = await makeSut()
+
+    expect(result.current.toggleTodoCompleteFromCollection("1")).rejects.toThrow(
+      "Cannot toggle todo complete without a selected collection",
     )
   })
 })
